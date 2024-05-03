@@ -14,9 +14,10 @@
 
 [principle]  
 
-![FMCW Radar Architecture](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu1-p3-liu-small.gif)
+&emsp; ![FMCW_Radar_Architecture](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu1-p3-liu-small.gif)  
+&emsp; <그림 1. >
 
-- $IF(t) = A_{IF} e^{j 2 \pi f_b t +\frac{4 \pi R(t)}{\lambda _c} } $ &emsp;&emsp; $(1)$    
+- $IF(t) = \LARGE{ A_{IF} e^{ {j 2 \pi f_b t + \frac{4 \pi R(t)}{\lambda _c} } } }$ &emsp;&emsp; $(1)$    
 	+ $A_{IF}$ : the amplitude of IF signal 
 	+ the real-time distance between human target and radar $R(t) =R0 + x(t)$ 
 	+ $R_0$ : distance between the target and the radar when it is relatively stationary  
@@ -42,8 +43,11 @@ $f_b = \frac{{2BR(t)}}{{c{T_c}}} $, &emsp;&emsp; $(2)$
 
 - Distance dimension FFT
   - DC 제거 후 FFT 연산 수행 → 스펙트럼 획득
-  - 주파수와 거리의 대응관계를 이용하여 주파수를 거리로 변환 → 거리 스펙트럼 획득
-  : ![radar ech signal로부터 얻어낸 거리 스펙트럼]( https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu2-p3-liu-small.gif)
+  - 주파수와 거리의 대응관계를 이용하여 주파수를 거리로 변환 → 거리 스펙트럼 획득  
+
+&emsp; ![]( https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu2-p3-liu-small.gif)  
+&emsp; <그림 2. radar_ech_signal로부터_얻어낸_거리_스펙트럼>
+
 - target processing
   : IF 신호의 위상에는 호흡 및 심박 정보가 포함되어 있으므로, range FFT를 통해 얻은 범위 단위의 위상정보를 처리
 	+ Phase Unwrapping
@@ -53,9 +57,10 @@ $f_b = \frac{{2BR(t)}}{{c{T_c}}} $, &emsp;&emsp; $(2)$
 	  (fixed phase offset 제거와 heartbeat signal 강화 목적)
 	+ 1st order difference 후의 신호는 random body movment에 옇향을 받고, spike 발생
 	  : 위와 같은 노이즈 성분을 제거하기 위해 이동 평균 필터링 사용
-	  (1st order differential signal smoothing, 평활화) 
+	  (1st order differential signal smoothing, 평활화)  
+&emsp; ![Change of phase with time at different stages](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu3-p3-liu-small.gif)  
+&emsp; <그림 3. >
 
-![Change of phase with time at different stages](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu3-p3-liu-small.gif)  
 	: a) is phase change diagram with time before phase unwrapping  
 	: b) is phase change diagram with time after phase unwrapping  
 	: c) is phase change diagram with time after phase unwrapping difference  
@@ -65,13 +70,17 @@ $f_b = \frac{{2BR(t)}}{{c{T_c}}} $, &emsp;&emsp; $(2)$
   : (adults) respiratory rate : 0.1-0.5Hz & heart rate : 0.8-2Hz  
 	+ 2-IIR elliptic band-pass filters : other freq. bands and accurately separate breath and heartbeat  
 	+ 대역 통과 필터링 후 호흡 및 심박의 시간 영역 파형  
-![](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu4-p3-liu-small.gif)  
+&emsp; ![](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu4-p3-liu-small.gif)
+&emsp; <그림 4. >
+
      + a) 에서 필터링된 호흡 신호가 상대적으로 매끄럽고 표준 주기 신호에 근접  
      + b) 의 필터링된 심장박동 신호는 호흡 고조파의 영향으로 인해 주파수 변동이 발생  
      + 심박 수파수 추출 전 고조파의 영향을 제거하는 알고리듬 적용이 필요함  
 
 - Extraction of respiration and heartbeat signals  
      + filtering된 호흡신호는 곧바로 FFT 수행 가능  
-     + 심박 신호 추출을 위해서는 호흡 고조파 제거 후 FFT 수행  
-        : 위상 2차 difference와 notch 필터의 조합으로 호흡 고조파 제거  
+     + 심박 신호 추출을 위해서는 호흡 고조파 제거 후 FFT 수행
+       > : 위상 2차 difference와 notch 필터의 조합으로 호흡 고조파 제거  
 ![notch filtering](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu5-p3-liu-small.gif)  
+&emsp; <그림 5. >
+
