@@ -83,10 +83,11 @@ layout: post
 &emsp; BR ($F_b$) 의 추정치 $\hat{f_b}$는  
 &emsp; $\hat{f_b} = \hat{b} f_r$  
 &emsp; 여기서, $\hat{b}$는  
-$\hat{b} = arg_{ b = (0, 1, ... , { ^{N_0} / _2} ) } Max |Y_b|$
-   
-&emsp; $Y_b ≜ \frac{1}{N_r} \sum_{n=0} ^{N_r - 1} \hat{\psi}[n] exp(-j2\pi n {\hat{b}}/_{N_0})$  
-&emsp; $ N_0 ≜ MN_r$  (M은 oversamplong factor)  
+&emsp; $\hat{b} = arg_{ b = (0, 1, ... , { ^{N_0} / _2} ) } Max |Y_b|$  
+
+&emsp; $Y_b ≜ \frac{1}{N_r} \sum_{n=0}^{N_r - 1} \hat{\psi}[n] exp(-j2\pi n {\hat{b}}/_{N_0})$  
+
+&emsp; $N_0 ≜ MN_r$  (M은 oversamplong factor)  
 
 <img src="https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/5/10061175/10049295/vitet9-3244362-large.gif" alt="Vital Signs Estimation Procedures" width="700px" height="200x">
 
