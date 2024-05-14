@@ -68,34 +68,27 @@ layout: post
 ### &ensp; 6.1. Deterministic Detection and Estimation Algorithms for SISO Radars
 - 단순화를 위해 SISO CW doppler radar로 focus를 맞추고, phase를 고려하면  
   + 위상 추출 단계:  
-&emsp; $\psi[n] ≜ \psi_0 + \Delta \psi[n]$  
-&emsp; 여기서, $\psi_0$는 DC 오프셋, $\Delta \psi[n]$은 호흡 및 심장 활동에 의해 유발된 신체 움직임과 관련된 시간에 따라 변하는 값  
-&emsp; $\Delta \psi[n] = \frac{4 \pi}{\lambda} \Delta R [n]$  
-위상 추출은 $N_r$차원 벡터에서 생성하는 첫번째 블럭에서 실행된다.  
-
-&emsp; $\hat{\psi} ≜ [\hat{\psi}[0], \hat{\psi}[1], ...  \hat{\psi}[N_r - 1] ]^T $  
-&emsp; $N_r$ : the overall number of measurements  
-&emsp; $\hat{\psi}[n]$ : $\psi[n]$(complex sample $[n]$의 위상)의 추정치   
+&emsp; -. $\psi[n] ≜ \psi_0 + \Delta \psi[n]$  
+&emsp; &emsp; +. $\psi_0$는 DC 오프셋, $\Delta \psi[n]$은 호흡 및 심장 활동에 의해 유발된 신체 움직임과 관련된 시간에 따라 변하는 값  
+&emsp; &emsp; +. $\Delta \psi[n] = \frac{4 \pi}{\lambda} \Delta R [n]$  
+&emsp; &emsp; +. 위상 추출은 $N_r$차원 벡터에서 생성하는 첫번째 블럭에서 실행된다.  
+&emsp; &emsp; +. $\hat{\psi} ≜ [\hat{\psi}[0], \hat{\psi}[1], ...  \hat{\psi}[N_r - 1] ]^T $  
+&emsp; &emsp; +. $N_r$ : the overall number of measurements  
+&emsp; &emsp; +. $\hat{\psi}[n]$ : $\psi[n]$(complex sample $[n]$의 위상)의 추정치   
   
-&emsp; 주어진 벡터 $\hat{\psi}[n]$에 대해, BR과 HR의 추정은 진폭 스펙트럼에서 지배적인 주파수 성분을 식별하는 periodogram method(주기도방법) [^61]을 이용하여 평가될 수 있다.
-  + 스페트럼에서 가장 높은 peak는 정상적인 호흡 조건의 호흡 주파수에서 발견되며, HR은 BR 보다 높다(2배 이상). 
+  + 주어진 벡터 $\hat{\psi}[n]$에 대해, BR과 HR의 추정은 진폭 스펙트럼에서 지배적인 주파수 성분을 식별하는 periodogram method(주기도방법) [^61]을 이용하여 평가될 수 있다.  
+  &emsp; ※ 스페트럼에서 가장 높은 peak는 정상적인 호흡 조건의 호흡 주파수에서 발견되며, HR은 BR 보다 높다(2배 이상). 
+  
+  &emsp; &emsp; - BR ($F_b$)의 추정치 $\hat{f_b}$는  
+  &emsp; &emsp; &emsp; $\hat{f_b} = \hat{b} f_r$  
+  &emsp; &emsp; &emsp; +. $\hat{b} = arg_{ b = (0, 1, ... , { ^{N_0}/_2 } ) } Max |Y_b|$  
+  &emsp; &emsp; &emsp; +. $Y_{\tilde{b}} ≜ \LARGE{ \frac{1}{N_r} \sum_{n=0} ^{N_r - 1} \hat{\psi}[n] exp(-j2\pi n {\hat{b}}/_{N_0}) }$  
+  &emsp; &emsp; &emsp; +. $ N_0 ≜ MN_r$  (M은 oversamplong factor)  
+  &emsp; &emsp; &emsp; +. $f_r ≜ \LARGE{ \frac{1}{N_0 T_s} }$  
+  &emsp; &emsp; - $Y_b$는 $\widetilde{\psi}$의 $N_0$ DFT 차수의 $\widetilde{b}$th element를 나타내며, 동일한 차수의 FFT 알고리듬을 이용하여 효과적으로 계산할 수 있다.
 
-&emsp; BR ($F_b$) 의 추정치 $\hat{f_b}$는  
-&emsp; $\hat{f_b} = \hat{b} f_r$  
-&emsp; 여기서, $\hat{b}$는  
-&emsp; $\hat{b} = arg_{ b = (0, 1, ... , { ^{N_0} / _2} ) } Max |Y_b|$  
-
-&emsp; $Y_b ≜ \frac{1}{N_r} \sum_{n=0}^{N_r - 1} \hat{\psi}[n] exp(-j2\pi n {\hat{b}}/_{N_0})$  
-
-&emsp; $N_0 ≜ MN_r$  (M은 oversamplong factor)  
-
-<img src="https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/5/10061175/10049295/vitet9-3244362-large.gif" alt="Vital Signs Estimation Procedures" width="700px" height="200x">
-
-
-
-
-
-
+<img src="https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/5/10061175/10049295/vitet9-3244362-large.gif" alt="Representation of the signal processing chain characterizing
+various deterministic methods for VS Estimation" width="700px" height="200x">
 
 #### &emsp; 6.1.1. FMCW and SFCW Radars:
 
@@ -108,7 +101,48 @@ layout: post
 ### &ensp; 6.4. Detection and Estimation Algorithms Exploiting LB Methods
 
 
+# 7. Some Considerations on radar selection and on its use in experimental campaigns.
+- ~~In this section, we illustrate some important lessons that we have learned from our experimental work conducted on healthy adult volunteers in the laboratories of the Department of Engineering “Enzo Ferrari” and of the Cardiology Division, Department of Biomedical, Metabolic and Neural Sciences, University of Modena and Reggio Emilia, Modena, Italy.~~ 
+- First, we focus on the essential requirements that radar devices employed for vital signs monitoring should meet.
+- Then, we provide some guidelines for developing an experimental setup and illustrate some numerical results about the estimates of vital signs extracted from our experimental measurements. 
+- Finally, we comment on how to assess estimation accuracy in vital signs monitoring.
+## Fundamental Requirements of Radar Devices  
+- 측정 환경 요인
+  + maximum distance of the radar from the body of the subject under test.  
+  &emsp; -. $R_{max} = N \LARGE{ \frac{c}{4B} }$  
+  &emsp; &emsp; +. $N$ : number of samples per chirp   
+  &emsp; &emsp; +. $B$ : bandwidth of the radiated signal  
+  &emsp; &emsp; ※ $B$가 주어진 경우, $N$을 증가(높은 sampling rate 적용)시키면, $R_{max}$는 증가한다.
 
+  + bandwidth and operating frequency ($f_0$)  
+  + resolution  
+  &emsp; -. 변위 분해능은 연속적으로 수신된 두 개의 프레임에 대한 최소 측정 가능한 변위로 정의  
+  &emsp; &emsp; +. displacement $\Delta R_{k, k+1}$은 $k$번째 frame과 이어지는 frame 사이의 taget point로 표현된다.  
+  &emsp; &emsp; &emsp; $\Delta R_{k, k+1} = \LARGE{ \frac{\lambda}{4 \pi} } \Delta \psi_{k, k+1}$   
+  &emsp; &emsp; &emsp; ... $\Delta \psi_{k, k+1}$ : 에코에서 관측된 phase 변화  
+  &emsp; &emsp; +. $\delta_{b,M}$이 호흡에 의한 chest 변위_최대값이라면, 가슴 움직임을 감지하는데 충분한 해상도는 아래 식을 만족해야 한다.    
+  &emsp; &emsp; &emsp; $\LARGE{ \frac{\Delta R_{k, k+1}}{T_0} \ge \frac{2\delta_{b,M}}{T_{B,R}} }$  
+  &emsp; &emsp; &emsp; $T_0 \le \LARGE{ \frac{2 \delta_{b,M}}{T_{B,R}} }R_{k, k+1}$ &emsp; or &emsp; $T_0 \le \LARGE{ \frac{T_{B,R}}{2 \delta_{b,M}} \frac{\lambda}{4\pi} } \Delta \hat{\psi}_{k, k+1}$ &emsp; &emsp; &emsp; &emsp; --- (82)  
+  &emsp; &emsp; +. $δ_{b,M}$과 $4λ$가 같다(where $λ ≅ 4 mm$)고 가정하면, 위상 모호성(phase ambiguity)을 피하기 위해 부등식 $Δψ_{k,k+1} < 2π$가 만족되어야 한다.  
+  &emsp; &emsp; +. from (82)로부터 (83)이 추론된다.  
+  &emsp; &emsp; &emsp; $\LARGE{ \frac{1}{T_0} > \frac{16}{T_{BR}} }$ &emsp; &emsp; &emsp; &emsp; --- (83)   
+  &emsp; -. 프레임 속도는 호흡 frequency보다 높아야 하며, HR의 변위에 대해서도 $T_{B,R}$을 $T_{H,R}$로 대체한 다음 유사하게 공식화 할 수 있다.  
+  &emsp; -. BR 및 HR 추정에서 충분한 정확도를 얻으려면, 프레임 속도 $\frac{1}{T_0}$의 선택이 중요함.
+  &emsp; &emsp; +. BR의 frame 속도:  
+  &emsp; &emsp; +. HR의 frame 속도: $^{50~100}/_{60 [sec]}, 1 ~ 1.67 Hz$ 
+  |  | BR | HR |
+  |---|---|---|
+  | general | $^{10~25}/_{60 [sec]}, 0.2 ~ 0.4 Hz$ | $^{50 ~ 100}/_{60 [sec]}, 1 ~ 1.67 Hz$ | 
+  | stress  | $^{~40}/_{60 [sec]},  ~ 0.67 Hz$ | $^{ ~ 180}/_{60 [sec]}, ~ 3 Hz$ | 
+
+  &emsp; &emsp; &emsp; +. (83)을 기반으로, 프레임 속도는 정지 상태에서 25Hz, 스트레스 상태에서는 45Hz 정도이며, 프레임 속도와 별개로 활력 징후에 대한 정확한 추정치를 생성하려면 충분히 긴 관찰 시간이 필요  
+  
+
+  + angular resolution  
+
+## 
+## 
+# 8. Applications of The Radar Technology to VS Monitoring 
 
 
 --- 
