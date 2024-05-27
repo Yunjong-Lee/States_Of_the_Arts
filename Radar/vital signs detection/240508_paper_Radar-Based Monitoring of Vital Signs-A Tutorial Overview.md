@@ -3,11 +3,6 @@ date: 2024-05-08 14:55:53
 layout: post
 ---
 
----
-date: 2024-05-08 14:55:53
-layout: post
----
-
 # [Radar-Based Monitoring of Vital Signs: A Tutorial Overview](https://ieeexplore.ieee.org/abstract/document/10049295)
 - Published in: Proceedings of the IEEE ( Volume: 111, Issue: 3, March 2023)
 
@@ -123,21 +118,21 @@ various deterministic methods for VS Estimation" width="700px" height="200x">
   &emsp; &emsp; +. $\delta_{b,M}$이 호흡에 의한 chest 변위_최대값이라면, 가슴 움직임을 감지하는데 충분한 해상도는 아래 식을 만족해야 한다.    
   &emsp; &emsp; &emsp; $\LARGE{ \frac{\Delta R_{k, k+1}}{T_0} \ge \frac{2\delta_{b,M}}{T_{B,R}} }$  
   &emsp; &emsp; &emsp; $T_0 \le \LARGE{ \frac{2 \delta_{b,M}}{T_{B,R}} }R_{k, k+1}$ &emsp; or &emsp; $T_0 \le \LARGE{ \frac{T_{B,R}}{2 \delta_{b,M}} \frac{\lambda}{4\pi} } \Delta \hat{\psi}_{k, k+1}$ &emsp; &emsp; &emsp; &emsp; --- (82)  
-  &emsp; &emsp; +. $δ_{b,M}$과 $4λ$가 같다(where $λ ≅ 4 mm$)고 가정하면, 위상 모호성(phase ambiguity)을 피하기 위해 부등식 $Δψ_{k,k+1} < 2π$가 만족되어야 한다.  
+  &emsp; &emsp; +. $δ_{b,M}$과 $4λ$가 같다(where $λ ≅ 4 mm$)고 가정하면, 위상 모호성(ambiguity)을 피하기 위해 부등식 $Δψ_{k,k+1} < 2π$가 만족되어야 한다.  
   &emsp; &emsp; +. from (82)로부터 (83)이 추론된다.  
   &emsp; &emsp; &emsp; $\LARGE{ \frac{1}{T_0} > \frac{16}{T_{BR}} }$ &emsp; &emsp; &emsp; &emsp; --- (83)   
   &emsp; -. 프레임 속도는 호흡 frequency보다 높아야 하며, HR의 변위에 대해서도 $T_{B,R}$을 $T_{H,R}$로 대체한 다음 유사하게 공식화 할 수 있다.  
   &emsp; -. BR 및 HR 추정에서 충분한 정확도를 얻으려면, 프레임 속도 $\frac{1}{T_0}$의 선택이 중요함.
   &emsp; &emsp; +. BR의 frame 속도:  
-  &emsp; &emsp; +. HR의 frame 속도: $^{50~100}/_{60 [sec]}, 1 ~ 1.67 Hz$ 
-  |  | BR | HR |
-  |---|---|---|
+  &emsp; &emsp; +. HR의 frame 속도: $^{50 ⁓ 100}/_{60 [sec]}, 1 ⁓ 1.67 [Hz]$
+
+  |         | BR                                   | HR                                     |
+  | ------- | ------------------------------------ | -------------------------------------- |
   | general | $^{10~25}/_{60 [sec]}, 0.2 ~ 0.4 Hz$ | $^{50 ~ 100}/_{60 [sec]}, 1 ~ 1.67 Hz$ | 
-  | stress  | $^{~40}/_{60 [sec]},  ~ 0.67 Hz$ | $^{ ~ 180}/_{60 [sec]}, ~ 3 Hz$ | 
+  | stress  | $^{~40}/_{60 [sec]},  ~ 0.67 Hz$     | $^{ ~ 180}/_{60 [sec]}, ~ 3 Hz$        | 
 
   &emsp; &emsp; &emsp; +. (83)을 기반으로, 프레임 속도는 정지 상태에서 25Hz, 스트레스 상태에서는 45Hz 정도이며, 프레임 속도와 별개로 활력 징후에 대한 정확한 추정치를 생성하려면 충분히 긴 관찰 시간이 필요  
   
-
   + angular resolution  
 
 ## 
