@@ -27,19 +27,19 @@ layout: post
 | UWB (19)  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
 | CW (12)   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
 
-- SSM[^1]
-  + 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선  
-  + UWB, SFCW 방식에 적용
-  + arctangent demodulation (AD)과 complex signal demodulation (CSD) 후에 적용
+- SSM[^1]  
+&emsp; +. 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
+&emsp; +. UWB, SFCW 방식에 적용  
+&emsp; +. arctangent demodulation (AD)과 complex signal demodulation (CSD) 후에 적용  
 
 ## ---  
-- 범위 정보는 샘플링 주파수($f_s$) 및 처프 스위프 기울기로부터 결정
-- 시스템의 range resolution은 sweap bandwidth($B_w$)로부터 결정
-- The number of chirps per second: 
-    + duty cycle 증가
-    + 자세한 object의 range & azimuth 제공
-- sampling point는 sampling frequency bin과 같음
-- sampling rates가 높을수록 sample points per chirp 제공 ... 더 많은 range bins 처리
+- 범위 정보는 샘플링 주파수($f_s$) 및 처프 스위프 기울기에 의존
+- range resolution은 sweap bandwidth($B_w$)에 의존
+- The number of chirps per second:  
+&emsp; +. duty cycle 증가  
+&emsp; +. 자세한 object의 range & azimuth 제공  
+- sampling point는 sampling frequency bin과 같음  
+- sampling rates가 높을수록 sample points per chirp 제공 ... 더 많은 range bins 처리  
 
 
 ## Vital Sign Signal Processing
@@ -52,10 +52,12 @@ layout: post
 - 
 
 ### 3. Time Varying Window
-- 심박수의 빠른 획득을 위한 측정은 2~5초 내에 이루어 짐.
-  + 스펙트럼 분해능 관련 문제 발생 : slow-time 축 $f_s$ 및 FFT의 포인트 수 $N$에 따라 달라지기 때문...(더 많은 사이클 필요), 획득 시간 증가
-- sampling rate 감소는 스펙트럼 해상도 인터벌 감소, but FMCW나 SFCW radar의 경우 ($N$은 시스템에서 계산된 range bin에 따라 달라지며 1주기 동안 $N$은 $f_s$보다 크지 않기때문에) slow-time 축 sampling은 적용하지 않음 
-표준 FFT를 사용하여 acquisition의 주기를 늘리는 것만으로도 주파수 해상도는 증가할 수 있다.
+- 심박수의 빠른 획득을 위한 측정은 2~5초 내에 이루어 짐.  
+&emsp; +. 스펙트럼 분해능 관련 문제 발생 : slow-time 축 $f_s$ 및 FFT의 포인트 수 $N$에 따라 달라지기 때문...(더 많은 사이클 필요), 획득 시간 증가  
+- sampling rate 감소는 스펙트럼 해상도 인터벌 감소  
+- but FMCW나 SFCW radar의 경우 slow-time 축 sampling은 적용하지 않음  
+  &ensp; ($N$은 시스템에서 계산된 range bin에 따라 달라지며 1주기 동안 $N$은 $f_s$보다 크지 않기때문)  
+- 표준 FFT를 사용하여 acquisition 주기를 늘리는 것만으로도 주파수 해상도는 증가할 수 있다.
 
 ---
 
