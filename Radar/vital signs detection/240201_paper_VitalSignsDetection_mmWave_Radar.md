@@ -59,6 +59,19 @@ layout: post
   &ensp; ($N$은 시스템에서 계산된 range bin에 따라 달라지며 1주기 동안 $N$은 $f_s$보다 크지 않기때문)  
 - 표준 FFT를 사용하여 acquisition 주기를 늘리는 것만으로도 주파수 해상도는 증가할 수 있다.
 
+### 4. Real-time Capabilities
+
+#### 4.1. Processing Chain
+
+
+#### 4.2. Extriacting A Commerical Algorithm for Offline Testing
+
+### 5. Programming the AWR1642 for MIMO Output
+
+
+### 6. MIMO Processomg
+
+
 ---
 
 [^1]: state space method 
