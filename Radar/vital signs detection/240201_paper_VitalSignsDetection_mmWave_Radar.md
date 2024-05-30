@@ -28,19 +28,24 @@ layout: post
 | 19 | UWB  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
 | 12 | CW   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
 
-- 본 논문에서 다룰 내용  
-&emsp; +. 빠르고 정확한 추정  
-&emsp; +. AD with FFT, DC Compensation (Linear Least Square Estimator, LLSE)  
-&emsp; +. MIMO 기능 활용을 통한 추정결과 개선  
-  + long term use may not be practical (FCC Part 15.255)
-  + frequency bands 관련 EIRP[^EIRP] 규정 (for Tx, as of 2013 in FCC 78 FR 59844 (09/30/2013))
-  &emsp; 57~65GHz에서,   
-  &emsp; +. average power  : ~ 40dBm   
-  &emsp; +. peak power : ~ 43dBm   
-  &emsp; 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용)
-  &emsp; +. average power : ~ 50dBm
-  &emsp; +. peak power : ~ 56dBm  
-
+- 본 논문에서 다룰 내용
+  + performance 관점
+    - 빠르고 정확한 추정  
+    &ensp; +. long term use may not be practical (FCC Part 15.255)  
+    &ensp; +. AD with FFT, DC Compensation (Linear Least Square Estimator, LLSE), [^Ref_5]  
+    - MIMO & MRC 기능 활용을 통한 추정결과 개선, [^Ref_3]  
+    ※ 추정 및 개선관련하여, feature extraction methods에서 가능성을 보임
+   
+  + frequency bands 관련 EIRP[^EIRP] 규정 (for Tx, as of 2013 in FCC 78 FR 59844 (09/30/2013))  
+    - 57~65GHz에서,   
+    &ensp; +. average power  : ~ 40dBm   
+    &ensp; +. peak power : ~ 43dBm   
+    - 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용)  
+    &ensp; +. average power : ~ 50dBm  
+    &ensp; +. peak power : ~ 56dBm  
+  + PoC
+    - holding breath [^holding_breath]
+    -  estimates on short time scales [^short_time_scale_1] [^short_time_scale_2]
 
 - SSM[^SSM]  
 &emsp; +. 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
@@ -89,5 +94,11 @@ layout: post
 
 ---
 
-[^SSM]: state space method 
-[^EIRP]: Equivalent Isotropically Radiated Power (등가 등방성 전력)
+[^SSM]: state space method   
+[^EIRP]: Equivalent Isotropically Radiated Power (등가 등방성 전력)   
+[^Ref_3]: T. Sakamoto. Noncontact measurement of human vital signs during sleep using low-power millimeter-wave ultrawideband mimo array radar. In 2019 IEEE MTT-S International Microwave Biomedical Conference (IMBioC), volume 1, pages 1–4, May 2019. 2, 5, 51, 52, 95   
+[^Ref_5]: T. Sakamoto, R. Imasaka, H. Taki, T. Sato, M. Yoshioka, K. Inoue, T. Fukuda, and H. Sakai. Feature-based correlation and topological similarity for interbeat interval 
+estimation using ultrawideband radar. IEEE Transactions on Biomedical Engineering, 63(4):747–757, April 2016. 2, 3, 5  
+[^holding_breath]: Huey-Ru Chuang, Hao-Chung Kuo, Fu-Ling Lin, Tzuen-Hsi Huang, Chi-Shin Kuo, and Ya-Wen Ou. 60-ghz millimeter-wave life detection system (mlds) for noncontact human vital-signal monitoring. Sensors Journal, IEEE, 12:602 – 609, 04 2012. 4, 5  
+[^short_time_scale_1]: M. Alizadeh, G. Shaker, J. C. M. D. Almeida, P. P. Morita, and S. Safavi-Naeini. Remote monitoring of human vital signs using mm-wave fmcw radar. IEEE Access, 7:54958–54968, 2019. 4, 5, 31  
+[^short_time_scale_2]: Zhicheng Yang, Parth Pathak, Yunze Zeng, Xixi Liran, and Prasant Mohapatra. Monitoring vital signs using millimeter wave. pages 211–220, 07 2016. 4, 5  
