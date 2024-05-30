@@ -9,23 +9,24 @@ layout: post
 ## Introduction
 - Vital signs State of Art
 
-| Type      | Frequency  |Dist  | BR Err| HR Err| Method     |Duration|
-|---        |---         |---   |---    |---    |---         |---     |
-| UWB (16)  | 1.5{4.5GHz | 0.8m | x     | 1.7%  | SSM-AD/CSD | 18s    |
-| SFCW (15) | 2-4GHz     | 1m   | x     | 1.6%  | SSM        | 18s    |
-| CW (16)   | 5.8GHz     | x    | x     | 3.4%  | TVW-CSD    | 2-5s   |
-| CW (13)   | 14GHz      | 5m   | x     | 2.2%  | AD         | 20-30s |
-| UWB (16)  | 24GHz      | x    | x     | *1%   | FBTS       | 20-55s |  
+|    | Type | Frequency  |Dist  | BR Err| HR Err| Method     |Duration|
+|--- |---   |---         |---   |---    |---    |---         |---     |
+| 16 | UWB  | 1.5{4.5GHz | 0.8m | x     | 1.7%  | SSM-AD/CSD | 18s    |
+| 15 | SFCW | 2-4GHz     | 1m   | x     | 1.6%  | SSM        | 18s    |
+| 16 | CW   | 5.8GHz     | x    | x     | 3.4%  | TVW-CSD    | 2-5s   |
+| 13 | CW   | 14GHz      | 5m   | x     | 2.2%  | AD         | 20-30s |
+| 16 | UWB  | 24GHz      | x    | x     | *1%   | FBTS       | 20-55s |  
 
-- Vital Signs Mmwave Results
 
-| Type      | Frequency  |Dist  | BR Err| HR Err| Method     |Duration|
-|---        |---         |---   |---    |---    |---         |---     |
-| FMCW (15) | 75-85GHz   | 1m   | 6.89% | 8.09% | FFT        | 100s   |
-| FMCW (19) | 77-81GHz   | 1.7m | 6%    | 20%   | AD-FFT     | 40min  |
-| CW (16)   | 60GHz      | 1m   | 2%    | 3.3%  | FFT        | 10min  |
-| UWB (19)  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
-| CW (12)   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
+- Vital Signs Mmwave Results  
+
+|    | Type | Frequency  |Dist  | BR Err| HR Err| Method     |Duration|
+|--- |---   |---         |---   |---    |---    |---         |---     |
+| 15 | FMCW | 75-85GHz   | 1m   | 6.89% | 8.09% | FFT        | 100s   |
+| 19 | FMCW | 77-81GHz   | 1.7m | 6%    | 20%   | AD-FFT     | 40min  |
+| 16 | CW   | 60GHz      | 1m   | 2%    | 3.3%  | FFT        | 10min  |
+| 19 | UWB  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
+| 12 | CW   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
 
 - SSM[^1]  
 &emsp; +. 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
