@@ -28,7 +28,21 @@ layout: post
 | 19 | UWB  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
 | 12 | CW   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
 
-- SSM[^1]  
+- 본 논문에서 다룰 내용  
+&emsp; +. 빠르고 정확한 추정  
+&emsp; +. AD with FFT, DC Compensation (Linear Least Square Estimator, LLSE)  
+&emsp; +. MIMO 기능 활용을 통한 추정결과 개선  
+  + long term use may not be practical (FCC Part 15.255)
+  + frequency bands 관련 EIRP[^EIRP] 규정 (for Tx, as of 2013 in FCC 78 FR 59844 (09/30/2013))
+  &emsp; 57~65GHz에서,   
+  &emsp; +. average power  : ~ 40dBm   
+  &emsp; +. peak power : ~ 43dBm   
+  &emsp; 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용)
+  &emsp; +. average power : ~ 50dBm
+  &emsp; +. peak power : ~ 56dBm  
+
+
+- SSM[^SSM]  
 &emsp; +. 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
 &emsp; +. UWB, SFCW 방식에 적용  
 &emsp; +. arctangent demodulation (AD)과 complex signal demodulation (CSD) 후에 적용  
@@ -75,4 +89,5 @@ layout: post
 
 ---
 
-[^1]: state space method 
+[^SSM]: state space method 
+[^EIRP]: Equivalent Isotropically Radiated Power (등가 등방성 전력)
