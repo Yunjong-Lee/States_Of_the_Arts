@@ -28,68 +28,68 @@ layout: post
 | 19 | UWB  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
 | 12 | CW   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
 
-- 본 논문에서 다룰 내용
-  + performance 관점
-    - 빠르고 정확한 추정  
-    &ensp; +. long term use may not be practical (FCC Part 15.255)  
-    &ensp; +. AD with FFT, DC Compensation (Linear Least Square Estimator, LLSE), [^Ref_5]  
+
+- 본 논문의 주요 주제
+  + performance 관점에서,
+    - 빠르고 정확한 추정 (long term use may not be practical, FCC Part 15.255)  
+    &ensp; : AD (Arc-tangent Detection) with FFT, DC Compensation (Linear Least Square Estimator, LLSE), [^Ref_5]  
     - MIMO & MRC 기능 활용을 통한 추정결과 개선, [^Ref_3]  
     ※ 추정 및 개선관련하여, feature extraction methods에서 가능성을 보임
    
   + frequency bands 관련 EIRP[^EIRP] 규정 (for Tx, as of 2013 in FCC 78 FR 59844 (09/30/2013))  
     - 57~65GHz에서,   
-    &ensp; +. average power  : ~ 40dBm   
-    &ensp; +. peak power : ~ 43dBm   
-    - 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용)  
+    &ensp; . average power  : ~ 40dBm   
+    &ensp; . peak power : ~ 43dBm   
+    - 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용, part 95)  
     &ensp; +. average power : ~ 50dBm  
     &ensp; +. peak power : ~ 56dBm  
   + PoC
     - holding breath [^holding_breath]
     -  estimates on short time scales [^short_time_scale_1] [^short_time_scale_2]
 
-- SSM[^SSM]  
-&emsp; +. 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
-&emsp; +. UWB, SFCW 방식에 적용  
-&emsp; +. arctangent demodulation (AD)과 complex signal demodulation (CSD) 후에 적용  
+  + SSM[^SSM]  
+    &ensp; . 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
+    &ensp; . UWB, SFCW 방식에 적용  
+    &ensp; . AD과 complex signal demodulation (CSD) 후에 적용  
 
 ## ---  
 - 범위 정보는 샘플링 주파수($f_s$) 및 처프 스위프 기울기에 의존
 - range resolution은 sweap bandwidth($B_w$)에 의존
 - The number of chirps per second:  
-&emsp; +. duty cycle 증가  
-&emsp; +. 자세한 object의 range & azimuth 제공  
+&ensp; +. duty cycle 증가  
+&ensp; +. 자세한 object의 range & azimuth 제공  
 - sampling point는 sampling frequency bin과 같음  
 - sampling rates가 높을수록 sample points per chirp 제공 ... 더 많은 range bins 처리  
 
 
-## Vital Sign Signal Processing
-### 1. Phase based Methods
+## 4. Vital Sign Signal Processing
+### 4.1. Phase based Methods
 - CSD (Complex Signal Demodulation) & AD (Arctangent Demodulation)
 - CSD : slow-time 축에서 target의 range profile 추출 → 추출된 range bin에 대해 FFT → HR/BR signal 추출  
 - AD : range profile에 대해 IQ signal의 phase 획득 → specified bin에서 FFT
 
-### 2. State Space Method  
+### 4.2. State Space Method  
 - 
 
-### 3. Time Varying Window
+### 4.3. Time Varying Window
 - 심박수의 빠른 획득을 위한 측정은 2~5초 내에 이루어 짐.  
-&emsp; +. 스펙트럼 분해능 관련 문제 발생 : slow-time 축 $f_s$ 및 FFT의 포인트 수 $N$에 따라 달라지기 때문...(더 많은 사이클 필요), 획득 시간 증가  
+&emsp; . 스펙트럼 분해능 관련 문제 발생 : slow-time 축 $f_s$ 및 FFT의 포인트 수 $N$에 따라 달라지기 때문...(더 많은 사이클 필요), 획득 시간 증가  
 - sampling rate 감소는 스펙트럼 해상도 인터벌 감소  
 - but FMCW나 SFCW radar의 경우 slow-time 축 sampling은 적용하지 않음  
   &ensp; ($N$은 시스템에서 계산된 range bin에 따라 달라지며 1주기 동안 $N$은 $f_s$보다 크지 않기때문)  
 - 표준 FFT를 사용하여 acquisition 주기를 늘리는 것만으로도 주파수 해상도는 증가할 수 있다.
 
-### 4. Real-time Capabilities
+### 4.4. Real-time Capabilities
 
-#### 4.1. Processing Chain
-
-
-#### 4.2. Extriacting A Commerical Algorithm for Offline Testing
-
-### 5. Programming the AWR1642 for MIMO Output
+#### 4.4.1. Processing Chain
 
 
-### 6. MIMO Processomg
+#### 4.4.2. Extriacting A Commerical Algorithm for Offline Testing
+
+### 4.5. Programming the AWR1642 for MIMO Output
+
+
+### 4.6. MIMO Processomg
 
 
 ---
