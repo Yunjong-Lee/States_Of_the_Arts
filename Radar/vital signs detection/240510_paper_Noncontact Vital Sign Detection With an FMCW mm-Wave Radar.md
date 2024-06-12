@@ -76,14 +76,20 @@ layout: post
   &ensp; - 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
   
 - Based on (8) and (9), the phase  
-  &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} = \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$
-  &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : the distance between the human subject and the radar that remains constant in slow time동안 일정하게 유지되는 반사체와 레이더 사이의 거리
+  &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$  
+  &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리
+  &ensp; &ensp; + chest wall displacement, $\hat{d}_i (t)$ : 호흡과 심장박동에 의해 발생되는 chest wall displacement
+  &ensp; &ensp; + fast time에서 흉벽 변위 $\hat{d}_i (nT_f)$는 짧은 chirp 주기로 인해 무시 가능, slow time에서 흉벽 변위 $\hat{d}_i (mT_f)$는 pulse change가 발생한다. 
+  &ensp; &ensp; &ensp; ... 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
 
-
-
+- range bin이 결정된 뒤에 phase signal(respiration signal, heartbeat signal, noise를 포함하는)은 slow time을 따라 추춮된다.  
+  &ensp; - $\phi = [\phi_1, \phi_2, ... , \phi_m]$  
   
 ## B. Differential Enhancement Module
 
+- Fig. 3(a) shows the phase signal ϕ and its corresponding spectrum. The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible. It is apparent that the chest wall displacement is mainly modulated by respiration. The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat. Moreover, it is found that the chest wall displacement caused by respiration is not purely sinusoidal and contains several distinct harmonic components, as shown in the phase spectrum [i.e., the right column of Fig. 3(a)]. Compared with the respiration frequency fr , the power of the heartbeat frequency fh is weak and easily submerged in the power of the second respiration harmonic 2fr , the fourth respiration harmonic 4fr , and noise, leading to an incorrect HR estimation.
+
+<img src="https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao3abcd-3250500-small.gif">  
 
 ## C. Signal Decomposition Module
 
