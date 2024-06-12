@@ -25,12 +25,12 @@ layout: post
   
   &ensp; - RR 및 HR 추정  
   &ensp; &ensp; + 앙상블 경험적 모드 분해(EEMD) [^21] , 자기상관 [^22] 및 적응 필터 [^23] 와 같은 시간 영역 신호 처리 기술 사용  
-  &ensp; &ensp;  : RR 감지의 경우, 간단하고 제어된 시나리오에서 작동 OK.  
-  &ensp; &ensp;  : 그러나 간섭(호흡 고조파, 잡음, 클러터 등)으로 인해 HR 감지 정확도가 낮다  
+  &ensp; &ensp; &ensp; : RR 감지의 경우, 간단하고 제어된 시나리오에서 작동 OK.  
+  &ensp; &ensp; &ensp; : 그러나 간섭(호흡 고조파, 잡음, 클러터 등)으로 인해 HR 감지 정확도가 낮다  
   &ensp; &ensp; &ensp; ... 다양한 물체(예: 벽, 문, 책상, 가구)에 의해 반사된 신호가 심장 박동 신호를 압도할 수 있다  
   &ensp; &ensp; &ensp; ... 호흡으로 인한 흉벽 변위가 심장 박동으로 인한 것보다 훨씬 더 클 수 있다(호흡 고조파는 심장 박동 신호에 가깝거나 압도하여 피크 선택이 잘못될 수 있다)  
 
-- 이 과제를 해결(tackle)하기 위해 4개의 function module을 구성  
+- 이 문제를 해결(tackle)하기 위해 본 논문에서 제안하는 솔루션 : 4개의 function module을 구성  
   &ensp; - VS extraction module : VS신호를 추출하기 위해 clutter를 제거하고 VS 신호가 강한 body에 해당하는 range bin 결정. 그 다음에 느린 시간에 따라 생체신호를 추출하여 클러터 간섭 제거
   
   &ensp; - differential enhancement module : ~~HR 추정에 대한 호흡 고조파 및 잡음의 영향을 줄여 1차 시간차에 의해 heartbeat component를 향상시키는 역할~~  1차 시간차를 사용하여 타동 강화 모듈의 심장 박동 구성 요소를 강화하고 호흡 고조파 및 소음의 간섭 완화
@@ -52,25 +52,35 @@ layout: post
 
 
 # System Implementation  
+
+<img src="https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao2-3250500-small.gif">
+
 ## A. Vital Sign Signal Extraction Module  
+
 - signal y(n,m) can be expressed for the nth ADC sample and the mth chirp as  
-  &ensp; - $y(n,m) = \frac {A_{T} A_{R}}{2} \sum _{i=1} ^{\Omega} [j( 2\pi \frac {2Bd_{i}{nT_{f} }}{cT_d}nT_f + 4\pi \frac {d_i{nT_f + mT_s}}{\lambda}] $  
-    
+  &ensp; - $y(n,m) = \LARGE{ \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp[ j(2\pi \frac{2Bd_i (nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ] } &emsp; &emsp; --- (8)$  
   &ensp; &ensp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
-  &ensp; &ensp; + $d_i(t)$, range between object in the $i-th$ range bin and the radar는 $d_i (t) = \hat d_i + \hatd_i(t)   
-  &ensp; &ensp; + $d_i$ is the constant distance between the subject in the ith range bin and the radar and d~i(t) is the time-varying displacement of the subject.  
+  &ensp; &ensp; + $d_i(t)$, range between object in the $i-th$ range bin and the radar는 $d_i (t) = \hat{d}_i + \hat{d}_i(t) --- (9)$   
+  &ensp; &ensp; + $d_i$ is the constant distance between the subject in the ith range bin and the radar and d~i(t) is the time-varying displacement of the subject.
+  
 - Based on (8) and (9), the frequency of the $m-th$ chirp is expressed as  
-  &ensp; - $f_b = \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d}$ &emsp; &emsp; --- (10)   
+  &ensp; - $f_b = \LARGE{ \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$ &emsp; &emsp; --- (10)   
   &ensp; - fast time displacement $d_i(nT_f)$는 chirp duration가 짧고, frequency에서 큰 변화를 가져올 수 없기때문에 무시할 수 있음.  
   &ensp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time에 걸쳐 FFT를 수행(range FFT라고 불린다)  
-  &ensp; &ensp; + $z(i, m) = \displaystyle\sum_{n=0}^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $&emsp; &emsp; --- (11)
-  &ensp; &ensp; &ensp; ⨠ i, range bin index
-  &ensp; - reflecting object의 range bin은 반사체가 없는 것(range bin) 보다 많은 에너지를 가지므로 range FFT는 empty bin을 필터링할 수 있다.
-  &ensp; &ensp; &ensp; ⨠ empty bin : correspond to wall, desk, or metal objects 등
-  &ensp; - 4GHz BW를 가지는 FMCW radar의 경우, range redolution이 3.75cm 이므로 반사물체의 multirange bin 검출 가증
-  &ensp; &ensp; &ensp; ⨠ multirange bin으로는 팔, 다리 등
-  &ensp; - 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰함으로써 range bin에 vital signs 신호가 존재하는지 결정한다.
-  &ensp; &ensp; + 
+  &ensp; &ensp; + $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $&emsp; &emsp; --- (11)  
+  &ensp; &ensp; &ensp; : i는 range bin index  
+  &ensp; - reflecting object의 range bin은 반사체가 없는 것의 range bin 보다 많은 에너지를 가지므로 range FFT로 empty bin을 필터링할 수 있다.  
+  &ensp; &ensp; &ensp; : empty bin의 예로는 correspond to wall, desk, or metal objects 등  
+  &ensp; - 4 GHz의 BW를 가지는 FMCW radar 경우, range redolution이 3.75cm 이므로 반사체의 multirange bin 검출 가증  
+  &ensp; &ensp; &ensp; : multirange bin으로는 팔, 다리 등  
+  &ensp; - 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
+  
+- Based on (8) and (9), the phase  
+  &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} = \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$
+  &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : the distance between the human subject and the radar that remains constant in slow time동안 일정하게 유지되는 반사체와 레이더 사이의 거리
+
+
+
   
 ## B. Differential Enhancement Module
 
