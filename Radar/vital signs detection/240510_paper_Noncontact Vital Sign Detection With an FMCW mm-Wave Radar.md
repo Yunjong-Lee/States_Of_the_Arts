@@ -12,7 +12,7 @@ layout: post
   &ensp; - But, Wi-Fi는 성능 제한이 있음  
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
   &ensp; &ensp; + Wi-Fi의 wavelength가 심장의 움직임에 의해 만들어지는 흉벽 움직임 보다 크기 때문에 heartbeat에 의한 tiny pulse 변화를 capture하기 어렵다.  
-  &ensp; &ensp; &ensp; ㅁ 심장의 움직임은 0.2–0.5 mm [^13], Wi-Fi의 wavelength는 60–120 mm
+  &ensp; &ensp; &ensp; --> 심장의 움직임은 0.2–0.5 mm [^13], Wi-Fi의 wavelength는 60–120 mm
   
   &ensp; - CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음
   
