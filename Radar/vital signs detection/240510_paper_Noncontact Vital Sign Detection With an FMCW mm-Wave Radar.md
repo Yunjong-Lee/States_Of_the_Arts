@@ -58,28 +58,30 @@ layout: post
 ## A. Vital Sign Signal Extraction Module  
 
 - signal y(n,m) can be expressed for the nth ADC sample and the mth chirp as  
-  &ensp; - $y(n,m) = \LARGE{ \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp[ j(2\pi \frac{2Bd_i (nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ] } &emsp; &emsp; --- (8)$  
+  &ensp; - $y(n,m) = \large{ \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i (nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ] } &emsp; &emsp; --- (8)$  
   &ensp; &ensp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
-  &ensp; &ensp; + $d_i(t)$, range between object in the $i-th$ range bin and the radar는 $d_i (t) = \hat{d}_i + \hat{d}_i(t) --- (9)$   
-  &ensp; &ensp; + $d_i$ is the constant distance between the subject in the ith range bin and the radar and d~i(t) is the time-varying displacement of the subject.
+  &ensp; &ensp; + $d_i(t)$, range between object in the $i-th$ range bin and the radar는  
+&ensp; &ensp; &ensp; &ensp; $d_i (t) = \hat{d}_i + \hat{d}_i(t) --- (9)$  
+  &ensp; &ensp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리 ~~is the constant distance between the subject in the ith range bin and the radar~~ and $d_i(t)$는 반사체의 시간에 따른 변화(위) ~~is the time-varying displacement of the subject~~
   
-- Based on (8) and (9), the frequency of the $m-th$ chirp is expressed as  
-  &ensp; - $f_b = \LARGE{ \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$ &emsp; &emsp; --- (10)   
-  &ensp; - fast time displacement $d_i(nT_f)$는 chirp duration가 짧고, frequency에서 큰 변화를 가져올 수 없기때문에 무시할 수 있음.  
+- Based on (8) and (9), the frequency of the $m - th$ chirp $f_b$은    
+  &ensp; - $f_b = \large{ \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$ &emsp; &emsp; --- (10)   
+  &ensp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency에서 큰 변화를 가져올 수 없기 때문에 무시 가능.    
   &ensp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time에 걸쳐 FFT를 수행(range FFT라고 불린다)  
-  &ensp; &ensp; + $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $&emsp; &emsp; --- (11)  
-  &ensp; &ensp; &ensp; : i는 range bin index  
-  &ensp; - reflecting object의 range bin은 반사체가 없는 것의 range bin 보다 많은 에너지를 가지므로 range FFT로 empty bin을 필터링할 수 있다.  
-  &ensp; &ensp; &ensp; : empty bin의 예로는 correspond to wall, desk, or metal objects 등  
+  &ensp; &ensp; + $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $ &emsp; &emsp; --- (11)  
+  &ensp; &ensp; &ensp; --> i : range bin index  
+  &ensp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
+  &ensp; &ensp; &ensp; --> empty bin의 예로는 correspond to wall, desk, or metal objects 등  
   &ensp; - 4 GHz의 BW를 가지는 FMCW radar 경우, range redolution이 3.75cm 이므로 반사체의 multirange bin 검출 가증  
   &ensp; &ensp; &ensp; : multirange bin으로는 팔, 다리 등  
   &ensp; - 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
   
 - Based on (8) and (9), the phase  
   &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$  
-  &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리
-  &ensp; &ensp; + chest wall displacement, $\hat{d}_i (t)$ : 호흡과 심장박동에 의해 발생되는 chest wall displacement
-  &ensp; &ensp; + fast time에서 흉벽 변위 $\hat{d}_i (nT_f)$는 짧은 chirp 주기로 인해 무시 가능, slow time에서 흉벽 변위 $\hat{d}_i (mT_f)$는 pulse change가 발생한다. 
+
+  &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리  
+  &ensp; &ensp; + chest wall displacement, $\hat{d}_i (t)$ : 호흡과 심장박동에 의해 발생되는 chest wall displacement  
+  &ensp; &ensp; + fast time에서 흉벽 변위 $\hat{d}_i (nT_f)$는 짧은 chirp 주기로 인해 무시 가능, slow time에서 흉벽 변위 $\hat{d}_i (mT_f)$는 pulse change가 발생한다.  
   &ensp; &ensp; &ensp; ... 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
 
 - range bin이 결정된 뒤에 phase signal(respiration signal, heartbeat signal, noise를 포함하는)은 slow time을 따라 추춮된다.  
@@ -87,11 +89,21 @@ layout: post
   
 ## B. Differential Enhancement Module
 
-- Fig. 3(a) shows the phase signal ϕ and its corresponding spectrum. The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible. It is apparent that the chest wall displacement is mainly modulated by respiration. The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat. Moreover, it is found that the chest wall displacement caused by respiration is not purely sinusoidal and contains several distinct harmonic components, as shown in the phase spectrum [i.e., the right column of Fig. 3(a)]. Compared with the respiration frequency fr , the power of the heartbeat frequency fh is weak and easily submerged in the power of the second respiration harmonic 2fr , the fourth respiration harmonic 4fr , and noise, leading to an incorrect HR estimation.
+Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.  
+~~The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible.~~
+- amplitude가 큰 waveform은 호흡에 의해 발생 (변동이 심함), 파형 상단의 작은 진동은 심박동에 의해 발생 (눈에 잘 띄지 않는다)  
+~~It is apparent that the chest wall displacement is mainly modulated by respiration.~~  
+  &ensp; --> 호흡으로 인한 흉벽의 변위는 heartbeat으로 인한 것 보다 클 수 있다. ~~The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat.~~ 
+- chest wall displacement(caused by respiration)는 순수한 사인파가 아니고, Fig 3(a) phase spectrum처럼 위상스펙트럼에 고조파를 포함. 
+- respiration frequency $f_r$과 비교하면, heartbeat frequency의 power는 weak하고 2차 호흡 고조파 $2f_r$의 power와 쉽게 합쳐진다. 4차 호흡 고조파와 noise, HR 추정이 부정확해 진다. 
 
 <img src="https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao3abcd-3250500-small.gif">  
 
 ## C. Signal Decomposition Module
+
+Note that the chest wall movement due to respiration ranges from 1 to 12 mm with a frequency of 0.1–0.5 Hz, while that caused by heartbeat ranges from 0.2 to 0.5 mm with a frequency of 0.8–2.0 Hz [5], [14]. Leveraging this property, we apply WPD to decompose the phase difference signal ϕ′ after the differential enhancement module and reconstruct the respiration signal θ and the heartbeat signal h . The separation of heartbeat and respiration signals can further mitigate the interference of respiration harmonics and high-frequency noise on HR estimation, which can be expressed as
+ϕ′=sg,0+sg,1+sg,2+⋯+sg,2g−2+sg,2g−1(15)
+
 
 
 ## D. Vital Sign Rate Reconstruction Module
