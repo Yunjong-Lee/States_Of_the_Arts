@@ -118,8 +118,8 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
 
   &ensp; &ensp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
 
-  &ensp; &ensp; &ensp; :1'st order temporal difference는 상당히 강화되고 $f_h$는 $2f_r$과 $4f_r$과 noise와 비교 시 스펙트럼 내에서 더 명확해진다(fig.3b 참조). 
-  &ensp; &ensp; &ensp; but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었으나 여전히 호흡 고조파와 노이즈의 power보다 낮다(fig 3 and 4). 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.
+  &ensp; &ensp; &ensp; :1'st order temporal difference는 상당히 강화되고 $f_h$는 $2f_r$과 $4f_r$과 noise와 비교 시 스펙트럼 내에서 더 명확해진다(fig.3b 참조).  
+  &ensp; &ensp; &ensp; but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었으나 여전히 호흡 고조파와 노이즈의 power보다 낮다(fig 3 and 4). 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
   signal decomposition module은 호흡 고조파와 high-frequency noise를 추가로 억제한다. 반면에, vital sign rate reconstruction module은 high-resolution sparse 스펙트럼(HR을 정확하게 감지하는데 도움을 준다)을 얻기위해 제공된다.  
 
 ## C. Signal Decomposition Module
