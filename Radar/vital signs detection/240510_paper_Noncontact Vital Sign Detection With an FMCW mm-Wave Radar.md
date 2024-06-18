@@ -6,6 +6,17 @@ layout: post
 # [Noncontact Vital Sign Detection With an FMCW mm-Wave Radar](https://ieeexplore.ieee.org/abstract/document/10058900)
 - IEEE Sensors Journal, Volume: 23, Issue: 8, 15 April 2023
 
+---
+
+# Index
+  I. Introduction  
+  II. Related Works  
+  III. Preliminaries  
+  IV. System Implementation  
+  V. Performance Evaluation  
+
+---
+
 # Abstract
 - commodity devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있음(Wi-Fi 기반 비접촉 센싱은 다양한 응용(호흡감지, 위치추정, 동작 인식 등) 가능
   
@@ -66,27 +77,27 @@ layout: post
   
 - Based on (8) and (9), the frequency of the $m - th$ chirp $f_b$은    
   &ensp; - $f_b = \large{ \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$ &emsp; &emsp; --- (10)   
-  &ensp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency에서 큰 변화를 가져올 수 없기 때문에 무시 가능.    
+  &ensp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency에서 큰 변화를 가져올 수 없기 때문에 무시 가능.  
   &ensp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time에 걸쳐 FFT를 수행(range FFT라고 불린다)  
   &ensp; &ensp; + $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $ &emsp; &emsp; --- (11)  
-  &ensp; &ensp; &ensp; --> i : range bin index  
+  &ensp; &ensp; &ensp; --> 여기서, i는 range bin index  
   &ensp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
   &ensp; &ensp; &ensp; --> empty bin의 예로는 correspond to wall, desk, or metal objects 등  
   &ensp; - 4 GHz의 BW를 가지는 FMCW radar 경우, range redolution이 3.75cm 이므로 반사체의 multirange bin 검출 가증  
   &ensp; &ensp; &ensp; : multirange bin으로는 팔, 다리 등  
   &ensp; - 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
-  
-- Based on (8) and (9), the phase  
-  &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$  
 
+- Based on (8) and (9), the phase  </br>  
+  &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$  </br>  
   &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리  
   &ensp; &ensp; + chest wall displacement, $\hat{d}_i (t)$ : 호흡과 심장박동에 의해 발생되는 chest wall displacement  
   &ensp; &ensp; + fast time에서 흉벽 변위 $\hat{d}_i (nT_f)$는 짧은 chirp 주기로 인해 무시 가능, slow time에서 흉벽 변위 $\hat{d}_i (mT_f)$는 pulse change가 발생한다.  
   &ensp; &ensp; &ensp; ... 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
 
 - range bin이 결정된 뒤에 phase signal(respiration signal, heartbeat signal, noise를 포함하는)은 slow time을 따라 추춮된다.  
-  &ensp; - $\phi = [\phi_1, \phi_2, ... , \phi_m]$  
-  
+
+  &ensp; - $\phi = [\phi_1, \phi_2, ... , \phi_m]$
+
 ## B. Differential Enhancement Module
 
 Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.  
@@ -95,9 +106,21 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
 ~~It is apparent that the chest wall displacement is mainly modulated by respiration.~~  
   &ensp; --> 호흡으로 인한 흉벽의 변위는 heartbeat으로 인한 것 보다 클 수 있다. ~~The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat.~~ 
 - chest wall displacement(caused by respiration)는 순수한 사인파가 아니고, Fig 3(a) phase spectrum처럼 위상스펙트럼에 고조파를 포함. 
-- respiration frequency $f_r$과 비교하면, heartbeat frequency의 power는 weak하고 2차 호흡 고조파 $2f_r$의 power와 쉽게 합쳐진다. 4차 호흡 고조파와 noise, HR 추정이 부정확해 진다. 
+- respiration frequency $f_r$과 비교하면, heartbeat frequency의 power는 weak하고 2차 호흡 고조파 $2f_r$의 power와 쉽게 합쳐진다. 4차 호흡 고조파, $4f_r$와 noise, HR 추정이 부정확해 진다. 
 
 <img src="https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao3abcd-3250500-small.gif">  
+
+- HR 추정시 호흡 고조파와 Noise의 영향을 완화하기 위해 VS 신호 추출 후 1'st temporal difference가 수행된다.  
+  &ensp; : 1'st order temporal difference가 수행되면, phase 신호의 heartbeat component가 강화됨.  
+  &ensp; - 위상 신호 $\phi$의 1'st order temporal difference    
+  &ensp; &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
+  &ensp; - 위상신호의 샘플의 수 ($M$) 와 일관성을 유지하기 위해, 위상 차 신호 $\phi^\prime$는 식 (14)로 근사된다. ( Fig. 3b 참조 (phase difference signal and its corresponding spectrum) )  
+
+  &ensp; &ensp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
+
+  &ensp; &ensp; &ensp; :1'st order temporal difference는 상당히 강화되고 $f_h$는 $2f_r$과 $4f_r$과 noise와 비교 시 스펙트럼 내에서 더 명확해진다(fig.3b 참조). 
+  &ensp; &ensp; &ensp; but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었으나 여전히 호흡 고조파와 노이즈의 power보다 낮다(fig 3 and 4). 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.
+  signal decomposition module은 호흡 고조파와 high-frequency noise를 추가로 억제한다. 반면에, vital sign rate reconstruction module은 high-resolution sparse 스펙트럼(HR을 정확하게 감지하는데 도움을 준다)을 얻기위해 제공된다.  
 
 ## C. Signal Decomposition Module
 
@@ -105,10 +128,7 @@ Note that the chest wall movement due to respiration ranges from 1 to 12 mm with
 ϕ′=sg,0+sg,1+sg,2+⋯+sg,2g−2+sg,2g−1(15)
 
 
-
 ## D. Vital Sign Rate Reconstruction Module
-
-
 
 --- 
 
