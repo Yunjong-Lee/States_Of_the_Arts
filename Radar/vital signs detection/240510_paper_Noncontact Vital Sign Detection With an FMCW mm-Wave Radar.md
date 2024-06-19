@@ -3,33 +3,32 @@ date: 2024-05-10 09:56:11
 layout: post
 ---
 
-# [Noncontact Vital Sign Detection With an FMCW mm-Wave Radar](https://ieeexplore.ieee.org/abstract/document/10058900)
-- IEEE Sensors Journal, Volume: 23, Issue: 8, 15 April 2023
+# [Noncontact Vital Sign Detection With an FMCW mm-Wave Radar](https://ieeexplore.ieee.org/abstract/document/10058900)  
+- IEEE Sensors Journal, Volume: 23, Issue: 8, 15 April 2023  
 
 ---
 
-# Index
-  I. Introduction  
-  II. Related Works  
-  III. Preliminaries  
-  IV. System Implementation  
-  V. Performance Evaluation  
-
+# Index  
+  - I. Introduction  
+  - II. Related Works  
+  - III. Preliminaries  
+  - IV. System Implementation  
+  - V. Performance Evaluation
 ---
 
-# Abstract
-- commodity devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있음(Wi-Fi 기반 비접촉 센싱은 다양한 응용(호흡감지, 위치추정, 동작 인식 등) 가능
+# Abstract  
+- commodity devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있음(Wi-Fi 기반 비접촉 센싱은 다양한 응용(호흡감지, 위치추정, 동작 인식 등) 가능  
   
   &ensp; - But, Wi-Fi는 성능 제한이 있음  
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
   &ensp; &ensp; + Wi-Fi의 wavelength가 심장의 움직임에 의해 만들어지는 흉벽 움직임 보다 크기 때문에 heartbeat에 의한 tiny pulse 변화를 capture하기 어렵다.  
-  &ensp; &ensp; &ensp; --> 심장의 움직임은 0.2–0.5 mm [^13], Wi-Fi의 wavelength는 60–120 mm
-  
-  &ensp; - CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음
+  &ensp; &ensp; &ensp; .>>> 심장의 움직임은 0.2–0.5 mm [^13], Wi-Fi의 wavelength는 60–120 mm  
+
+  &ensp; - CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음  
   
   &ensp; - UWB pulse radar and FMCW radar는 wideband를 이용하므로 object와 device간의 거리 측정 가능  
-  &ensp; &ensp; + UWB는 high hardware cost and system complexity  
-  &ensp; &ensp; + mmwave FMCW는 wide bandwidth와 narrow beamwidth를 가지므로 다른 물체의 반사를 구분하는데 도움이 되며, 크기도 소형.
+  &ensp; &ensp; + UWB는 hardware cost와 system complexity가 높다  
+  &ensp; &ensp; + mmwave FMCW는 wide bandwidth와 narrow beamwidth를 가지므로 서로 다른 물체로부터의 반사를 구분하는데 유리, 소형화 가능.
   
 - 기존 신호 처리 기술  
   &ensp; - FFT(Fast Fourier Transform) [^18] , STFT(Short-Time Fourier Transform) [^19] , CWT(CW Transform) [^20] 등 주파수 영역 변환 기법을 직접 활용
@@ -122,13 +121,28 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
   &ensp; &ensp; &ensp; but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었으나 여전히 호흡 고조파와 노이즈의 power보다 낮다(fig 3 and 4). 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
   signal decomposition module은 호흡 고조파와 high-frequency noise를 추가로 억제한다. 반면에, vital sign rate reconstruction module은 high-resolution sparse 스펙트럼(HR을 정확하게 감지하는데 도움을 준다)을 얻기위해 제공된다.  
 
-## C. Signal Decomposition Module
-
-Note that the chest wall movement due to respiration ranges from 1 to 12 mm with a frequency of 0.1–0.5 Hz, while that caused by heartbeat ranges from 0.2 to 0.5 mm with a frequency of 0.8–2.0 Hz [5], [14]. Leveraging this property, we apply WPD to decompose the phase difference signal ϕ′ after the differential enhancement module and reconstruct the respiration signal θ and the heartbeat signal h . The separation of heartbeat and respiration signals can further mitigate the interference of respiration harmonics and high-frequency noise on HR estimation, which can be expressed as
-ϕ′=sg,0+sg,1+sg,2+⋯+sg,2g−2+sg,2g−1(15)
-
+## C. Signal Decomposition Module : WPD
+- 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz), heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].  
+- 이러한 특성을 활용하여, WPD를 적용하여 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성한다. 
+- heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(식 15로 표현)를 더욱 완화할 수 있다.  
+  &ensp; $ϕ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1} $ (15)  
+  &ensp; &ensp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
+  &ensp; &ensp; -. $q-th$ subband signal의 주파수 범위는  
+  &ensp; &ensp; &ensp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1), q = 0, 1, 2 ...$  
+- wavelet bias로 Morlet wavelet 선택  
+  &ensp; - 선정 사유: 호흡과 심박 파형과 유사  
+  &ensp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
+  &ensp; &ensp; -. $θ = s_{6,0} + s_{6,1} + s_{6,2}   
+  &ensp; &ensp; -. $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}      
+  &ensp; &ensp; -. 첫번째에서 세번째 서브밴드 신호는 호흡 재구성에 사용되며, 6번째부터 12번째 서브밴드 신호는 심박 신호 재구성에 사용됨.  
+  &ensp; &ensp; -. WPD 이후, $Δ$초 간격으로 $δ$초 slide 한다.   
+※ sliding time window를 가지는 호흡과 심박 신호에 따라, vital sign rate reconstruction module은 정확한 RR과 HR 추정을 위해 high-resolution sparse spectrum을 얻기 위해 제안됨  
 
 ## D. Vital Sign Rate Reconstruction Module
+### 1) SSR for Vital Sign Rate Reconstruction:
+
+
+
 
 --- 
 
@@ -139,6 +153,8 @@ Note that the chest wall movement due to respiration ranges from 1 to 12 mm with
 [^21]: K.-K. Shyu, L.-J. Chiu, P.-L. Lee, T.-H. Tung and S.-H. Yang, "Detection of breathing and heart rates in UWB radar sensor data using FVPIEF-based two-layer EEMD", IEEE Sensors J., vol. 19, no. 2, pp. 774-784, Jan. 2019.  
 [^22]:  H. Shen et al., "Respiration and heartbeat rates measurement based on autocorrelation using IR-UWB radar", IEEE Trans. Circuits Syst. II Exp. Briefs, vol. 65, no. 10, pp. 1470-1474, Oct. 2018.  
 [^23]: M. He, Y. Nian and Y. Gong, "Novel signal processing method for vital sign monitoring using FMCW radar", Biomed. Signal Process. Control, vol. 33, pp. 335-345, Mar. 2017.  
+[^5]: A. Singh, S. U. Rehman, S. Yongchareon and P. H. J. Chong, "Multi-resident non-contact vital sign monitoring using radar: A review", IEEE Sensors J., vol. 21, no. 4, pp. 4061-4084, Nov. 2021.  
+[^14]: T. Zheng, Z. Chen, S. Ding and J. Luo, "Enhancing RF sensing with deep learning: A layered approach", IEEE Commun. Mag., vol. 59, no. 2, pp. 70-76, Feb. 2021.  
 
 
 
