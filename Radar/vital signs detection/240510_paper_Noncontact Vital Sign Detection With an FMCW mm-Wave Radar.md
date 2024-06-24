@@ -97,8 +97,7 @@ layout: post
 
   &ensp; - $\phi = [\phi_1, \phi_2, ... , \phi_m]$
 
-## B. Differential Enhancement Module
-
+## B. Differential Enhancement Module  
 Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.  
 ~~The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible.~~
 - amplitude가 큰 waveform은 호흡에 의해 발생 (변동이 심함), 파형 상단의 작은 진동은 심박동에 의해 발생 (눈에 잘 띄지 않는다)  
@@ -113,30 +112,32 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
   &ensp; : 1'st order temporal difference가 수행되면, phase 신호의 heartbeat component가 강화됨.  
   &ensp; - 위상 신호 $\phi$의 1'st order temporal difference    
   &ensp; &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
-  &ensp; - 위상신호의 샘플의 수 ($M$) 와 일관성을 유지하기 위해, 위상 차 신호 $\phi^\prime$는 식 (14)로 근사된다. ( Fig. 3b 참조 (phase difference signal and its corresponding spectrum) )  
+  &ensp; - 위상신호의 샘플 수 ($M$) 와 일관성을 유지하기 위해, 위상 차 신호 $\phi^\prime$는 식 (14)로 근사된다. ( Fig. 3b 참조 (phase difference signal and its corresponding spectrum) )  
 
   &ensp; &ensp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
 
-  &ensp; &ensp; &ensp; :1'st order temporal difference는 상당히 강화되고 $f_h$는 $2f_r$과 $4f_r$과 noise와 비교 시 스펙트럼 내에서 더 명확해진다(fig.3b 참조).  
-  &ensp; &ensp; &ensp; but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었으나 여전히 호흡 고조파와 노이즈의 power보다 낮다(fig 3 and 4). 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
+  &ensp; &ensp; &ensp; :1'st order temporal difference는 상당히 강화되고 $f_h$는 $2f_r$과 $4f_r$과 noise와 스펙트럼 내에서 비교시 더 명확해진다(fig.3b 참조).  
+  &ensp; &ensp; &ensp; but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었지만, 호흡 고조파와 노이즈의 power보다는 낮음(fig 3 and 4).  
+  &ensp; &ensp; &ensp; 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
   signal decomposition module은 호흡 고조파와 high-frequency noise를 추가로 억제한다. 반면에, vital sign rate reconstruction module은 high-resolution sparse 스펙트럼(HR을 정확하게 감지하는데 도움을 준다)을 얻기위해 제공된다.  
 
-## C. Signal Decomposition Module : WPD
-- 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz), heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].  
-- 이러한 특성을 활용하여, WPD를 적용하여 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성한다. 
-- heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(식 15로 표현)를 더욱 완화할 수 있다.  
-  &ensp; $ϕ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1} $ (15)  
+## C. Signal Decomposition Module : WPD  
+- 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz) 이고 heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].  
+- 이러한 특성을 활용하여, WPD를 적용하여 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성한다.  
+- heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(식 15로 표현)를 더욱 완화할 수 있다.   
+
+  &ensp; $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1} $ --- (15)  
   &ensp; &ensp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
   &ensp; &ensp; -. $q-th$ subband signal의 주파수 범위는  
   &ensp; &ensp; &ensp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1), q = 0, 1, 2 ...$  
 - wavelet bias로 Morlet wavelet 선택  
   &ensp; - 선정 사유: 호흡과 심박 파형과 유사  
   &ensp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
-  &ensp; &ensp; -. $θ = s_{6,0} + s_{6,1} + s_{6,2}   
-  &ensp; &ensp; -. $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}      
+  &ensp; &ensp; -. $θ = s_{6,0} + s_{6,1} + s_{6,2}$   
+  &ensp; &ensp; -. $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}$      
   &ensp; &ensp; -. 첫번째에서 세번째 서브밴드 신호는 호흡 재구성에 사용되며, 6번째부터 12번째 서브밴드 신호는 심박 신호 재구성에 사용됨.  
-  &ensp; &ensp; -. WPD 이후, $Δ$초 간격으로 $δ$초 slide 한다.   
-※ sliding time window를 가지는 호흡과 심박 신호에 따라, vital sign rate reconstruction module은 정확한 RR과 HR 추정을 위해 high-resolution sparse spectrum을 얻기 위해 제안됨  
+  &ensp; &ensp; -. WPD 이후, $Δ$초 간격으로 $δ$초 slide(이동)   
+※ sliding time window를 가지는 호흡과 심박 신호에 따라 (signal with sliding time window), vital sign rate reconstruction module은 high-resolution sparse spectrum (정확한 RR과 HR 추정을 위해)을 얻기 위해 제안됨  
 
 ## D. Vital Sign Rate Reconstruction Module
 ### 1) SSR for Vital Sign Rate Reconstruction:
