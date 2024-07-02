@@ -17,7 +17,7 @@ layout: post
 ---
 
 # Abstract  
-- commodity devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있음(Wi-Fi 기반 비접촉 센싱은 다양한 응용(호흡감지, 위치추정, 동작 인식 등) 가능  
+- devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있으므로 Wi-Fi 기반 비접촉 센싱은 다양한 응용(호흡감지, 위치추정, 동작 인식 등) 가능  
   
   &ensp; - But, Wi-Fi는 성능 제한이 있음  
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
