@@ -17,12 +17,16 @@ layout: post
 ---
 
 # Abstract  
-- devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있으므로 Wi-Fi 기반 비접촉 센싱은 다양한 응용(호흡감지, 위치추정, 동작 인식 등) 가능  
+- devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있다
+  &ensp; - 추출된 신로를 이용하여 Wi-Fi 기반 비접촉 센싱 응용(호흡감지, 위치추정, 동작 인식 등)에 활용이 가능함  
   
   &ensp; - But, Wi-Fi는 성능 제한이 있음  
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
   &ensp; &ensp; + Wi-Fi의 wavelength가 심장의 움직임에 의해 만들어지는 흉벽 움직임 보다 크기 때문에 heartbeat에 의한 tiny pulse 변화를 capture하기 어렵다.  
-  &ensp; &ensp; &ensp; .>>> 심장의 움직임은 0.2–0.5 mm [^13], Wi-Fi의 wavelength는 60–120 mm  
+
+  | 변위 | Wi-Fi     | 심장의 움직임    |
+  | ---  | ---       | ---              |
+  |      | 60–120 mm | 0.2–0.5 mm [^13] | 
 
   &ensp; - CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음  
   
@@ -31,10 +35,10 @@ layout: post
   &ensp; &ensp; + mmwave FMCW는 wide bandwidth와 narrow beamwidth를 가지므로 서로 다른 물체로부터의 반사를 구분하는데 유리, 소형화 가능.
   
 - 기존 신호 처리 기술  
-  &ensp; - FFT(Fast Fourier Transform) [^18] , STFT(Short-Time Fourier Transform) [^19] , CWT(CW Transform) [^20] 등 주파수 영역 변환 기법을 직접 활용
+  &ensp; - 주파수 영역 변환 기법 (Fast Fourier Transform [^18] , Short-Time Fourier Transform [^19] , CW Transform [^20] 등) 활용
   
   &ensp; - RR 및 HR 추정  
-  &ensp; &ensp; + 앙상블 경험적 모드 분해(EEMD) [^21] , 자기상관 [^22] 및 적응 필터 [^23] 와 같은 시간 영역 신호 처리 기술 사용  
+  &ensp; &ensp; + 시간 영역 신호 처리 기술(앙상블 경험적 모드 분해(EEMD) [^21] , 자기상관 [^22] 및 적응 필터 [^23] 등) 사용  
   &ensp; &ensp; &ensp; --> RR 감지의 경우, 간단하고 제어된 시나리오에서 작동 OK.  
   &ensp; &ensp; &ensp; --> 그러나 간섭(호흡 고조파, 잡음, 클러터 등)으로 인해 HR 감지 정확도가 낮다  
   &ensp; &ensp; &ensp; ..... 다양한 물체(예: 벽, 문, 책상, 가구)에 의해 반사된 신호가 심장 박동 신호를 압도할 수 있다  
