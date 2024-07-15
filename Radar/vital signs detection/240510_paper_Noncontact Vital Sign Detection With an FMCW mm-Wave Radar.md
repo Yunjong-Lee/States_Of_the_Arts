@@ -9,53 +9,57 @@ layout: post
 ---
 
 # Index  
-  - I. Introduction  
-  - II. Related Works  
-  - III. Preliminaries  
-  - IV. System Implementation  
-  - V. Performance Evaluation
+
+- I. Introduction  
+- II. Related Works  
+- III. Preliminaries  
+- IV. System Implementation  
+- V. Performance Evaluation
+
 ---
 
 # Abstract  
-- devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있다
-  &ensp; - 추출된 신로를 이용하여 Wi-Fi 기반 비접촉 센싱 응용(호흡감지, 위치추정, 동작 인식 등)에 활용이 가능함  
-  
-  &ensp; - But, Wi-Fi는 성능 제한이 있음  
+- devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있다  
+  &ensp; - 추출된 신로를 이용하여 Wi-Fi 기반 비접촉 센싱 응용(호흡감지, 위치추정, 동작 인식 등)에 활용 가능함  
+  &ensp; - But, Wi-Fi는 다음과 같은 이유로 성능 제한이 있음  
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
   &ensp; &ensp; + Wi-Fi의 wavelength가 심장의 움직임에 의해 만들어지는 흉벽 움직임 보다 크기 때문에 heartbeat에 의한 tiny pulse 변화를 capture하기 어렵다.  
 
-  | 변위 | Wi-Fi     | 심장의 움직임    |
-  | ---  | ---       | ---              |
-  |      | 60–120 mm | 0.2–0.5 mm [^13] | 
+  | 변위 | 움직임          |
+  | ---  | ---            |
+  |Wi-Fi | 60–120 mm      | 
+  | 심장 | 0.2–0.5 mm [^13]|
+   
 
-  &ensp; - CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음  
+- CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음  
   
-  &ensp; - UWB pulse radar and FMCW radar는 wideband를 이용하므로 object와 device간의 거리 측정 가능  
-  &ensp; &ensp; + UWB는 hardware cost와 system complexity가 높다  
-  &ensp; &ensp; + mmwave FMCW는 wide bandwidth와 narrow beamwidth를 가지므로 서로 다른 물체로부터의 반사를 구분하는데 유리, 소형화 가능.
+- UWB pulse radar and FMCW radar는 wideband를 이용하므로 object와 device간의 거리 측정 가능  
+  &ensp; - UWB는 hardware cost와 system complexity가 높다  
+  &ensp; - mmwave FMCW는 wide bandwidth와 narrow beamwidth를 가지므로 서로 다른 물체로부터의 반사를 구분하는데 유리, 소형화 가능.
   
 - 기존 신호 처리 기술  
   &ensp; - 주파수 영역 변환 기법 (Fast Fourier Transform [^18] , Short-Time Fourier Transform [^19] , CW Transform [^20] 등) 활용
   
   &ensp; - RR 및 HR 추정  
   &ensp; &ensp; + 시간 영역 신호 처리 기술(앙상블 경험적 모드 분해(EEMD) [^21] , 자기상관 [^22] 및 적응 필터 [^23] 등) 사용  
-  &ensp; &ensp; &ensp; --> RR 감지의 경우, 간단하고 제어된 시나리오에서 작동 OK.  
-  &ensp; &ensp; &ensp; --> 그러나 간섭(호흡 고조파, 잡음, 클러터 등)으로 인해 HR 감지 정확도가 낮다  
-  &ensp; &ensp; &ensp; ..... 다양한 물체(예: 벽, 문, 책상, 가구)에 의해 반사된 신호가 심장 박동 신호를 압도할 수 있다  
-  &ensp; &ensp; &ensp; ..... 호흡으로 인한 흉벽 변위가 심장 박동으로 인한 것보다 훨씬 더 클 수 있다(호흡 고조파는 심장 박동 신호에 가깝거나 압도하여 피크 선택이 잘못될 수 있다)  
+  &ensp; &ensp; &ensp; → RR 감지의 경우, 간단하고 제어된 시나리오에서 작동 OK.  
+  &ensp; &ensp; &ensp; → 그러나, 간섭(호흡 고조파, 잡음, 클러터 등)으로 인해 HR 감지 정확도가 낮다  
+  &ensp; &ensp; &ensp; : 다양한 물체(예: 벽, 문, 책상, 가구)에 의해 반사된 신호가 심장 박동 신호를 압도할 수 있다  
+  &ensp; &ensp; &ensp; : 호흡으로 인한 흉벽 변위가 심장 박동으로 인한 흉벽 변위 보다 클 수 있다(호흡 고조파는 심장 박동 신호에 가깝거나 압도하여 피크 선택이 잘못될 수 있다)  
 
 - 이 문제를 해결(tackle)하기 위해 본 논문에서 제안하는 솔루션 : 4개의 function module을 구성  
-  &ensp; - VS extraction module : VS신호를 추출하기 위해 clutter를 제거하고 VS 신호가 강한 body에 해당하는 range bin 결정. 그 다음에 느린 시간에 따라 생체신호를 추출하여 클러터 간섭 제거
+  &ensp; - VS extraction module : VS신호를 추출하기 위해 clutter를 제거하고 VS 신호가 강한 body에 해당하는 range bin 결정. 그 다음에 느린 시간에 따라 생체신호를 추출 ~~하여 클러터 간섭 제거~~
+  &ensp; &ensp; Q. clutter를 제거를 위해 사용한 방법은?
   
   &ensp; - differential enhancement module : ~~HR 추정에 대한 호흡 고조파 및 잡음의 영향을 줄여 1차 시간차에 의해 heartbeat component를 향상시키는 역할~~  1차 시간차를 사용하여 타동 강화 모듈의 심장 박동 구성 요소를 강화하고 호흡 고조파 및 소음의 간섭 완화
   
-  &ensp; - 신호 분해 모듈(signal decomposition module) : wavelet packet decomposition(WPD)를 통해 호흡 신호와 심박 신호를 분리하여 심박 신호의 호흡 고조파 및 고주파 노이즈 억제
+  &ensp; - 신호 분해 모듈(signal decomposition module) : wavelet packet decomposition (WPD)를 통해 호흡 신호와 심박 신호를 분리하여 심박 신호의 호흡 고조파 및 고주파 노이즈 억제
   
   &ensp; - VS 비율 재구성 모듈(vital sign rate reconstruction module) : VS 비율의 희소 스펙트럼 재구성(sparse spectrum reconstruction, SSR)은 적응형 필터에 mapping되고, 제로 유인 부호 지수 망각 최소 평균 제곱 (zero attracting sign exponentially forgetting least mean square, ZA-SEFLMS) algorithm은 고해상도 희소 스펙트럼을 이용하여 VS 비율 재구성
   
   &ensp; &ensp; + 주파수 빈이 크게 증가하고 호흡 고조파 및 소음의 스펙트럼 전력 억제 가능  
   
-- result는 설계된 mmRH가 호흡 고조파, 소음 및 클러터 간섭을 효과적으로 억제할 수 있으며 기존 방법에 비해 RR/HR 감지 정확도가 크게 향상됨  
+- result는 설계된 mmRH가 호흡 고조파, 소음 및 클러터 간섭 억제 가능 및 기존 방법에 비해 RR/HR 감지 정확도 향상됨  
 
 
 # Related Works  
@@ -71,8 +75,8 @@ layout: post
 
 ## A. Vital Sign Signal Extraction Module  
 
-- signal y(n,m) can be expressed for the nth ADC sample and the mth chirp as  
-  &ensp; - $y(n,m) = \large{ \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i (nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ] } &emsp; &emsp; --- (8)$  
+- signal $y(n,m)$ can be expressed for the n-th ADC sample and the m-th chirp as  
+  &emsp; - $y(n,m) = \large{ \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i×(nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ] } &emsp; &emsp; --- (8)$  
   &ensp; &ensp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
   &ensp; &ensp; + $d_i(t)$, range between object in the $i-th$ range bin and the radar는  
 &ensp; &ensp; &ensp; &ensp; $d_i (t) = \hat{d}_i + \hat{d}_i(t) --- (9)$  
@@ -104,9 +108,9 @@ layout: post
 ## B. Differential Enhancement Module  
 Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.  
 ~~The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible.~~
-- amplitude가 큰 waveform은 호흡에 의해 발생 (변동이 심함), 파형 상단의 작은 진동은 심박동에 의해 발생 (눈에 잘 띄지 않는다)  
+- amplitude가 큰 waveform은 호흡에 의해 발생 (변동이 심함), 파형 상단의 작은 진동은 심장 박동에 의해 발생 (눈에 잘 띄지 않는다)  
 ~~It is apparent that the chest wall displacement is mainly modulated by respiration.~~  
-  &ensp; --> 호흡으로 인한 흉벽의 변위는 heartbeat으로 인한 것 보다 클 수 있다. ~~The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat.~~ 
+  &ensp; - 호흡으로 인한 흉벽의 변위는 heartbeat으로 인한 것 보다 클 수 있다. ~~The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat.~~ 
 - chest wall displacement(caused by respiration)는 순수한 사인파가 아니고, Fig 3(a) phase spectrum처럼 위상스펙트럼에 고조파를 포함. 
 - respiration frequency $f_r$과 비교하면, heartbeat frequency의 power는 weak하고 2차 호흡 고조파 $2f_r$의 power와 쉽게 합쳐진다. 4차 호흡 고조파, $4f_r$와 noise, HR 추정이 부정확해 진다. 
 
@@ -129,18 +133,17 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
 - 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz) 이고 heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].  
 - 이러한 특성을 활용하여, WPD를 적용하여 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성한다.  
 - heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(식 15로 표현)를 더욱 완화할 수 있다.   
-
-  &ensp; $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1} $ --- (15)  
-  &ensp; &ensp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
-  &ensp; &ensp; -. $q-th$ subband signal의 주파수 범위는  
-  &ensp; &ensp; &ensp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1), q = 0, 1, 2 ...$  
+  &emsp; [Eq.15]() &emsp;  $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}$    
+  &emsp; &emsp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
+  &emsp; &emsp; -. $q-th$ subband signal의 주파수 범위는  
+  &emsp; &emsp; &emsp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1), q = 0, 1, 2 ...$  
 - wavelet bias로 Morlet wavelet 선택  
-  &ensp; - 선정 사유: 호흡과 심박 파형과 유사  
-  &ensp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
-  &ensp; &ensp; -. $θ = s_{6,0} + s_{6,1} + s_{6,2}$   
-  &ensp; &ensp; -. $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}$      
-  &ensp; &ensp; -. 첫번째에서 세번째 서브밴드 신호는 호흡 재구성에 사용되며, 6번째부터 12번째 서브밴드 신호는 심박 신호 재구성에 사용됨.  
-  &ensp; &ensp; -. WPD 이후, $Δ$초 간격으로 $δ$초 slide(이동)   
+  &emsp; - 선정 사유: 호흡과 심박 파형과 유사  
+  &emsp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
+  &emsp; &emsp; -. $θ = s_{6,0} + s_{6,1} + s_{6,2}$   
+  &emsp; &emsp; -. $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}$      
+  &emsp; &emsp; -. 첫번째에서 세번째 서브밴드 신호는 호흡 재구성에 사용되며, 6번째부터 12번째 서브밴드 신호는 심박 신호 재구성에 사용됨.  
+  &emsp; &emsp; -. WPD 이후, $Δ$초 간격으로 $δ$초 slide(이동)   
 ※ sliding time window를 가지는 호흡과 심박 신호에 따라 (signal with sliding time window), vital sign rate reconstruction module은 high-resolution sparse spectrum (정확한 RR과 HR 추정을 위해)을 얻기 위해 제안됨  
 
 ## D. Vital Sign Rate Reconstruction Module
@@ -151,15 +154,25 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
 
 --- 
 
+[^5]: A. Singh, S. U. Rehman, S. Yongchareon and P. H. J. Chong, "Multi-resident non-contact vital sign monitoring using radar: A review", IEEE Sensors J., vol. 21, no. 4, pp. 4061-4084, Nov. 2021.  
 
 [^13]: G. Ramachandran and M. Singh, "Three-dimensional reconstruction of cardiac displacement patterns on the chest wall during the P QRS and T-segments of the ECG by laser speckle inteferometry", Med. Biol. Eng. Comput., vol. 27, no. 5, pp. 525-530, Sep. 1989.
+
+[^14]: T. Zheng, Z. Chen, S. Ding and J. Luo, "Enhancing RF sensing with deep learning: A layered approach", IEEE Commun. Mag., vol. 59, no. 2, pp. 70-76, Feb. 2021. 
+
+[^18]: J. Tu and J. Lin, "Fast acquisition of heart rate in noncontact vital sign Radar measurement using time-window-variation technique", IEEE Trans. Instrum. Meas., vol. 65, no. 1, pp. 112-122, Jan. 2016.
+
 [^19]: M. Alizadeh, G. Shaker, J. C. M. De Almeida, P. P. Morita and S. Safavi-Naeini, "Remote monitoring of human vital signs using mm-Wave FMCW radar", IEEE Access, vol. 7, pp. 54958-54968, 2019.  
+
 [^20]: L. Liu, S. Zhang and W. Xiao, "Noncontact vital signs detection using joint wavelet analysis and autocorrelation computation", Chin. J. Eng., vol. 43, no. 9, pp. 1206-1214, 2021.  
+
 [^21]: K.-K. Shyu, L.-J. Chiu, P.-L. Lee, T.-H. Tung and S.-H. Yang, "Detection of breathing and heart rates in UWB radar sensor data using FVPIEF-based two-layer EEMD", IEEE Sensors J., vol. 19, no. 2, pp. 774-784, Jan. 2019.  
+
 [^22]:  H. Shen et al., "Respiration and heartbeat rates measurement based on autocorrelation using IR-UWB radar", IEEE Trans. Circuits Syst. II Exp. Briefs, vol. 65, no. 10, pp. 1470-1474, Oct. 2018.  
+
 [^23]: M. He, Y. Nian and Y. Gong, "Novel signal processing method for vital sign monitoring using FMCW radar", Biomed. Signal Process. Control, vol. 33, pp. 335-345, Mar. 2017.  
-[^5]: A. Singh, S. U. Rehman, S. Yongchareon and P. H. J. Chong, "Multi-resident non-contact vital sign monitoring using radar: A review", IEEE Sensors J., vol. 21, no. 4, pp. 4061-4084, Nov. 2021.  
-[^14]: T. Zheng, Z. Chen, S. Ding and J. Luo, "Enhancing RF sensing with deep learning: A layered approach", IEEE Commun. Mag., vol. 59, no. 2, pp. 70-76, Feb. 2021.  
+
+ 
 
 
 
