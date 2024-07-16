@@ -25,10 +25,10 @@ layout: post
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
   &ensp; &ensp; + Wi-Fi의 wavelength가 심장의 움직임에 의해 만들어지는 흉벽 움직임 보다 크기 때문에 heartbeat에 의한 tiny pulse 변화를 capture하기 어렵다.  
 
-  | 변위 | 움직임          |
-  | ---  | ---            |
-  |Wi-Fi | 60–120 mm      | 
-  | 심장 | 0.2–0.5 mm [^13]|
+  |       | wave length     |
+  | ---   | ---             |
+  | Wi-Fi | 60–120 mm       | 
+  | 심장  | 0.2–0.5 mm [^13]|
    
 
 - CW doppler radar는 전력 소모는 적으나, range 정보는 제공할 수 없음  
@@ -48,7 +48,7 @@ layout: post
   &ensp; &ensp; &ensp; : 호흡으로 인한 흉벽 변위가 심장 박동으로 인한 흉벽 변위 보다 클 수 있다(호흡 고조파는 심장 박동 신호에 가깝거나 압도하여 피크 선택이 잘못될 수 있다)  
 
 - 이 문제를 해결(tackle)하기 위해 본 논문에서 제안하는 솔루션 : 4개의 function module을 구성  
-  &ensp; - VS extraction module : VS신호를 추출하기 위해 clutter를 제거하고 VS 신호가 강한 body에 해당하는 range bin 결정. 그 다음에 느린 시간에 따라 생체신호를 추출 ~~하여 클러터 간섭 제거~~
+  &ensp; - VS extraction module : VS신호를 추출하기 위해 clutter를 제거하고 VS 신호가 강한 body에 해당하는 range bin 결정. 그 다음에 느린 시간에 따라 생체신호를 추출 ~~하여 클러터 간섭 제거~~   
   &ensp; &ensp; Q. clutter를 제거를 위해 사용한 방법은?
   
   &ensp; - differential enhancement module : ~~HR 추정에 대한 호흡 고조파 및 잡음의 영향을 줄여 1차 시간차에 의해 heartbeat component를 향상시키는 역할~~  1차 시간차를 사용하여 타동 강화 모듈의 심장 박동 구성 요소를 강화하고 호흡 고조파 및 소음의 간섭 완화
@@ -68,42 +68,51 @@ layout: post
 # Preliminaries  
 
 
-
 # System Implementation  
 
 <img src="https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao2-3250500-small.gif">
 
 ## A. Vital Sign Signal Extraction Module  
 
-- signal $y(n,m)$ can be expressed for the n-th ADC sample and the m-th chirp as  
-  &emsp; - $y(n,m) = \large{ \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i×(nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ] } &emsp; &emsp; --- (8)$  
-  &ensp; &ensp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
-  &ensp; &ensp; + $d_i(t)$, range between object in the $i-th$ range bin and the radar는  
-&ensp; &ensp; &ensp; &ensp; $d_i (t) = \hat{d}_i + \hat{d}_i(t) --- (9)$  
-  &ensp; &ensp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리 ~~is the constant distance between the subject in the ith range bin and the radar~~ and $d_i(t)$는 반사체의 시간에 따른 변화(위) ~~is the time-varying displacement of the subject~~
+- n번째 ADC 샘플과 m번째 처프에 대해, signal $y(n,m)$ can be expressed as  
+
+  &emsp; - [Eq. 8] &emsp; $y(n,m) = \large{
+                            \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i×(nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ]
+                                            }$  
+
+  &emsp; &emsp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
+  &emsp; &emsp; + $d_i(t)$는  $i-th$ range bin에 있는 object와 radar 사이의 range  
+&emsp; &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d}_i + \hat{d}_i(t)$  
+  &emsp; &emsp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
   
-- Based on (8) and (9), the frequency of the $m - th$ chirp $f_b$은    
-  &ensp; - $f_b = \large{ \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$ &emsp; &emsp; --- (10)   
-  &ensp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency에서 큰 변화를 가져올 수 없기 때문에 무시 가능.  
-  &ensp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time에 걸쳐 FFT를 수행(range FFT라고 불린다)  
-  &ensp; &ensp; + $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $ &emsp; &emsp; --- (11)  
-  &ensp; &ensp; &ensp; --> 여기서, i는 range bin index  
-  &ensp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
-  &ensp; &ensp; &ensp; --> empty bin의 예로는 correspond to wall, desk, or metal objects 등  
-  &ensp; - 4 GHz의 BW를 가지는 FMCW radar 경우, range redolution이 3.75cm 이므로 반사체의 multirange bin 검출 가증  
-  &ensp; &ensp; &ensp; : multirange bin으로는 팔, 다리 등  
-  &ensp; - 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
+- Eq. (8)과 (9) 기반으로, $m - th$ chirp $f_b$의 frequency는    
+  &emsp; - [Eq. 10] &emsp; $f_b = \large{ 
+                                        \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} 
+                                        }$   
+  &emsp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency 변화가 작기때문에 무시 가능.  
+  &emsp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time 영역을 FFT (range FFT라고도 힌디)  
+  &emsp; &emsp; + [Eq. 11] &emsp; $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $  
+  &emsp; &emsp; &emsp; -->> 여기서, i는 range bin index  
 
-- Based on (8) and (9), the phase  </br>  
-  &ensp; - $\phi = \LARGE{ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$  </br>  
-  &ensp; &ensp; + quasi-stationary human subject, $\hat{d}_i$ : slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리  
-  &ensp; &ensp; + chest wall displacement, $\hat{d}_i (t)$ : 호흡과 심장박동에 의해 발생되는 chest wall displacement  
-  &ensp; &ensp; + fast time에서 흉벽 변위 $\hat{d}_i (nT_f)$는 짧은 chirp 주기로 인해 무시 가능, slow time에서 흉벽 변위 $\hat{d}_i (mT_f)$는 pulse change가 발생한다.  
-  &ensp; &ensp; &ensp; ... 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
+  &emsp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
+  &emsp; &emsp; &emsp; -->> empty bin의 예로는 correspond to wall, desk, or metal objects 등  
+  &emsp; - 4 GHz의 BW를 가지는 FMCW radar 경우, range redolution이 3.75cm 이므로 반사체의 multirange bin 검출 가증  
+  &emsp; &emsp; &emsp; : multirange bin으로는 팔, 다리 등  
+- 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
+  &emsp; -->> Q. range bin의 위상 변화를 관찰하는 방법은?
 
-- range bin이 결정된 뒤에 phase signal(respiration signal, heartbeat signal, noise를 포함하는)은 slow time을 따라 추춮된다.  
+- Based on (8) and (9), the phase $\phi $는   
+  &emsp; - $\phi = \LARGE{ 
+                            \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda}
+                        }$
+  
+  &emsp; &emsp; 여기서, quasi-stationary human subject ($\hat{d}_i$)는 slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리이고,  
+  &emsp; &emsp; chest wall displacement ($\hat{d}_i (t)$)는 호흡과 심장박동으로 생겨나는 chest의 displacement이고,  
+  &emsp; &emsp; fast time에서 흉벽 변위 ($\hat{d}_i (nT_f)$)는 짧은 chirp 주기로 인해 무시 가능, slow time에서 흉벽 변위 $\hat{d}_i (mT_f)$는 pulse change가 발생한다. 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
 
-  &ensp; - $\phi = [\phi_1, \phi_2, ... , \phi_m]$
+- range bin이 결정된 뒤에 phase signal(respiration signal, heartbeat signal, noise 등을 포함하는)은 slow time을 따라 추춮된다.  
+
+  &ensp; - $\phi = [\phi_1, &ensp; \phi_2, &ensp; ... , \phi_m]$
 
 ## B. Differential Enhancement Module  
 Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.  
