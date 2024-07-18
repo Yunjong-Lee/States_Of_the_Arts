@@ -150,9 +150,8 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; [Eq.15] &emsp; $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}$    
   &emsp; &emsp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
   &emsp; &emsp; -. $q-th$ subband signal의 주파수 범위는  
-  $(^{f_{slow}} / _{2^{g+1}} )q$ ⁓ $(^{f_{slow}}/_{2^{g+1}})(q+1)$  
-  &emsp; &emsp; $^{f_{slow}} / _{2^{g+1}} q$ ⁓ $^{f_{slow}}/_{2^{g+1}} (q+1)$, 
-  &emsp; &emsp; &emsp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1)$, &emsp; $q = 0, 1, 2 ...$  
+  &emsp; &emsp; $(^{f_{slow}} / _{2^{g+1}} )q$ ⁓ $(^{f_{slow}}/_{2^{g+1}})(q+1)$, &emsp; $q = 0, 1, 2 ...$
+
 - wavelet bias로 Morlet wavelet 선택  
   &emsp; - 선정 사유: 호흡과 심박 파형과 유사  
   &emsp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
