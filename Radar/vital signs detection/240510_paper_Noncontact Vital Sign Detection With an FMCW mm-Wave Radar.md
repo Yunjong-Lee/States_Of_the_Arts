@@ -117,7 +117,7 @@ layout: post
   &ensp; - $\phi = [\phi_1, &ensp; \phi_2, &ensp; ... , \phi_m]$
 
 ## B. Differential Enhancement Module  
-Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.  
+Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.  
 ~~The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible.~~
 - amplitude가 큰 waveform은 호흡에 의해 발생 (변동이 심함), 파형 상단의 작은 진동은 심장 박동에 의해 발생 (눈에 잘 띄지 않는다)  
 ~~It is apparent that the chest wall displacement is mainly modulated by respiration.~~  
@@ -129,8 +129,8 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
 
 - HR 추정시 호흡 고조파와 Noise의 영향을 완화하기 위해 VS 신호 추출 후 1'st temporal difference가 수행된다.  
   &ensp; : 1'st order temporal difference가 수행되면, phase 신호의 heartbeat component가 강화됨.  
-  &ensp; - 위상 신호 $\phi$의 1'st order temporal difference    
-  &ensp; &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
+  &ensp; - 위상 신호 ($\large {ϕ}$)의 1'st order temporal difference  
+  &ensp; &ensp; [Eq. 13] &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
   &ensp; - 위상신호의 샘플 수 ($M$) 와 일관성을 유지하기 위해, 위상 차 신호 $\phi^\prime$는 식 (14)로 근사된다. ( Fig. 3b 참조 (phase difference signal and its corresponding spectrum) )  
 
   &ensp; &ensp; [Eq. 14] &emsp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
@@ -139,13 +139,20 @@ Fig. 3(a) shows the phase signal $ϕ$ and its corresponding spectrum.
   &ensp; &ensp; &ensp; ※ 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
 
 ## C. Signal Decomposition Module : WPD  
-- 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz) 이고 heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].  
-- 이러한 특성을 활용하여, WPD를 적용하여 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성한다.  
-- heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(식 15로 표현)를 더욱 완화할 수 있다.   
-  &emsp; [Eq.15]() &emsp;  $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}$    
+- 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz)이고 heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].
+  |          |  range       | frequency    |
+  |---       | ---          | ---          |
+  |호흡      | 1 - 12 mm    | 0.1 - 0.5 Hz |
+  |heartbeat | 0.2 - 0.5 mm | 0.8 - 2.0 Hz |
+  
+- 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성하기 위해 WPD를 적용한다.  
+  + heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(Eq. 15)를 더욱 완화할 수 있다.   
+  &emsp; [Eq.15] &emsp; $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}$    
   &emsp; &emsp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
   &emsp; &emsp; -. $q-th$ subband signal의 주파수 범위는  
-  &emsp; &emsp; &emsp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1), q = 0, 1, 2 ...$  
+  $(^{f_{slow}} / _{2^{g+1}} )q$ ⁓ $(^{f_{slow}}/_{2^{g+1}})(q+1)$  
+  &emsp; &emsp; $^{f_{slow}} / _{2^{g+1}} q$ ⁓ $^{f_{slow}}/_{2^{g+1}} (q+1)$, 
+  &emsp; &emsp; &emsp; +. $(^{ f_{slow} } / _{ 2^{g+1} })q ⁓ (^{ f_{slow} } / _{ 2^{g+1} })(q+1)$, &emsp; $q = 0, 1, 2 ...$  
 - wavelet bias로 Morlet wavelet 선택  
   &emsp; - 선정 사유: 호흡과 심박 파형과 유사  
   &emsp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
