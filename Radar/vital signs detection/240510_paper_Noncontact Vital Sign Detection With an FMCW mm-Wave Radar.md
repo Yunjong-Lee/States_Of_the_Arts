@@ -19,7 +19,7 @@ layout: post
 ---
 
 # Abstract  
-- devices로부터 Wi-Fi (2.4/5 GHz) 신호를 추출할 수 있다  
+- devices를 이용하여 Wi-Fi (2.4/5 GHz) 신호 추출이 가능함  
   &ensp; - 추출된 신로를 이용하여 Wi-Fi 기반 비접촉 센싱 응용(호흡감지, 위치추정, 동작 인식 등)에 활용 가능함  
   &ensp; - But, Wi-Fi는 다음과 같은 이유로 성능 제한이 있음  
   &ensp; &ensp; + narrow bandwidth, small(갯수) Ant., large wavelength.  
@@ -147,10 +147,10 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   
 - 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성하기 위해 WPD를 적용한다.  
   + heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(Eq. 15)를 더욱 완화할 수 있다.   
-  &emsp; [Eq.15] &emsp; $ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}$    
+  &emsp; [Eq.15] &emsp; $\large{    ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}    }$    
   &emsp; &emsp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
   &emsp; &emsp; -. $q-th$ subband signal의 주파수 범위는  
-  &emsp; &emsp; $(^{f_{slow}} / _{2^{g+1}} )q$ ⁓ $(^{f_{slow}}/_{2^{g+1}})(q+1)$, &emsp; $q = 0, 1, 2 ...$
+  &emsp; &emsp; &emsp; $\large{    \frac{f_{slow}} {2^{g+1}} × q    }$ ⁓ $\large{    \frac{f_{slow}}{2^{g+1}} × (q+1)    } $, &emsp; $q = 0, 1, 2 ...$
 
 - wavelet bias로 Morlet wavelet 선택  
   &emsp; - 선정 사유: 호흡과 심박 파형과 유사  
