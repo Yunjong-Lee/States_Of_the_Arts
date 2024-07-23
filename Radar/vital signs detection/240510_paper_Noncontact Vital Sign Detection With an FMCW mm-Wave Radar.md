@@ -175,11 +175,13 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; &emsp; $η$ and $σ$는 noise (from the environment and body),  
   &emsp; &emsp; $\Psi$는 $M x L$ basis matrix  
   &emsp; $\psi_{m, l} = e^{j \frac{2\pi}{L} ml}$, $m = 1, 2, ... , M$; $l = 1, 2, ... , L$ &emsp; &emsp; &emsp; &emsp; {20}  
-  &emsp; $\psi_{m, l} = e^1$
   + Compared with FFT, the frequency bins of the reconstructed spectrum by SSR are significantly increased. The spectral power of the respiration harmonics and noise is further suppressed with the introduction of sparse constraint, and the peaks related to RR and HR become dominant.
-  + SSR에 의해 reconstructed spectrum의 freq. bin은 FFT와 비교하여 상당히 증가되었다. 호흡의 하모닉과 노이즈의 스펙트럼 파워는 supressed.
+  + SSR에 의해 reconstructed spectrum의 freq. bin은 FFT와 비교하여 상당히 증가되었다. 희소 제약 조건을 적용하면, 호흡의 하모닉과 노이즈의 스펙트럼 파워는 supress되고 RR과 HR과 관련된 peak가 지배적이 된다.
 
-  
+### 2) ZA-SEFLMS Algorithm for SSR Based on Adaptive Filter
+- adaptive filter는 구조가 simple하고 간섭 관련 성능이 우수하여 널리 이용되고 있음
+- 적응 필터의 추정 오류 $\epsilon (k)$는
+&emsp; $\epsilon (k) = \rho(k) - v^T (k) \omega(k)$
 
 
 
