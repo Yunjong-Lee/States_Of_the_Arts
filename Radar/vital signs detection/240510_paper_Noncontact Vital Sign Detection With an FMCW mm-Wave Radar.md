@@ -82,16 +82,18 @@ layout: post
 
   &emsp; &emsp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
   &emsp; &emsp; + $d_i(t)$는  $i-th$ range bin에 있는 object와 radar 사이의 range  
-&emsp; &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d}_i + \hat{d}_i(t)$  
+  &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d}_i + \hat{d}_i(t)$  
   &emsp; &emsp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
   
 - Eq. (8)과 (9) 기반으로, m_th chirp $f_b$의 frequency는    
-  &emsp; - [Eq. 10] &emsp; $f_b = \large{ 
+  &emsp; - [Eq. 10] &emsp; $f_b = \LARGE{ 
                                         \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} 
                                         }$   
   &emsp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency 변화가 작기때문에 무시 가능.  
   &emsp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time 영역을 FFT (range FFT라고도 힌디)  
-  &emsp; &emsp; + [Eq. 11] &emsp; $z(i, m) = \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) $  
+  &emsp; &emsp; + [Eq. 11] &emsp; $z(i, m) = \large{
+                                              \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N})
+                                              }$  
   &emsp; &emsp; &emsp; -->> 여기서, i는 range bin index  
 
   &emsp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
@@ -163,6 +165,16 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 
 ## D. Vital Sign Rate Reconstruction Module
 ### 1) SSR for Vital Sign Rate Reconstruction:
+- SSR의 목적 : high-resolution sparse spectrum 획득  
+  + high-resolution sparse spectrum 획득 방법: signal sparsity를 증가시키는 방벙 활용  
+  + spectrum reconstruction은 underdetermined linear equation을 기반으로 얻어진다.  
+  &emsp; &emsp; $h = \Psi e + \eta, \tag{18}$  
+  &emsp; &emsp; $θ = \Psi w + \sigma, \tag{19}$   
+  &emsp; &emsp; 여기서, $e = [e_1, e_2, … , e_L]^T, w = [w_1, w_2, …, w_L]^T$ are $L×1$ column vectors,
+  &emsp; &emsp; 여기서, $h = [h_1, h_2, … , h_M]^T, \, θ = [θ_1, θ_2, … , θ_M]^T$ are $M×1$ column vectors $(M≪L)$
+  &emsp; &emsp; $η$ and $σ$는 noise (from the environment and body)
+  
+
 
 
 
