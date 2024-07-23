@@ -182,7 +182,7 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 - adaptive filter는 구조가 simple하고 간섭 관련 성능이 우수하여 널리 이용되고 있음
 - 적응 필터의 추정 오류 $\epsilon (k)$는
 &emsp; $\epsilon (k) = \rho(k) - v^T (k) \omega(k)$
-
+&emsp; &emsp; $\rho(k) = $
 
 
 
