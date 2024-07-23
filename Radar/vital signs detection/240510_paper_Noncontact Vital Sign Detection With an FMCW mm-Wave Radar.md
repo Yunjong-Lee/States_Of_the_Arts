@@ -166,13 +166,19 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 ## D. Vital Sign Rate Reconstruction Module
 ### 1) SSR for Vital Sign Rate Reconstruction:
 - SSR의 목적 : high-resolution sparse spectrum 획득  
-  + high-resolution sparse spectrum 획득 방법: signal sparsity를 증가시키는 방벙 활용  
+  + high-resolution sparse spectrum 획득 방법: 식 20을 활용한 signal sparsity를 증가시키는 방벙 적용  
   + spectrum reconstruction은 underdetermined linear equation을 기반으로 얻어진다.  
   &emsp; &emsp; $h = \Psi e + \eta, \tag{18}$  
   &emsp; &emsp; $θ = \Psi w + \sigma, \tag{19}$   
-  &emsp; &emsp; 여기서, $e = [e_1, e_2, … , e_L]^T, w = [w_1, w_2, …, w_L]^T$ are $L×1$ column vectors,
-  &emsp; &emsp; 여기서, $h = [h_1, h_2, … , h_M]^T, \, θ = [θ_1, θ_2, … , θ_M]^T$ are $M×1$ column vectors $(M≪L)$
-  &emsp; &emsp; $η$ and $σ$는 noise (from the environment and body)
+  &emsp; &emsp; 여기서, $e = [e_1, e_2, … , e_L]^T, w = [w_1, w_2, …, w_L]^T$ are $L×1$ column vectors,  
+  &emsp; &emsp; $h = [h_1, h_2, … , h_M]^T, \, θ = [θ_1, θ_2, … , θ_M]^T$ are $M×1$ column vectors $(M≪L)$,  
+  &emsp; &emsp; $η$ and $σ$는 noise (from the environment and body),  
+  &emsp; &emsp; $\Psi$는 $M x L$ basis matrix  
+  &emsp; $\psi_{m, l} = e^{j \frac{2\pi}{L} ml}$, $m = 1, 2, ... , M$; $l = 1, 2, ... , L$ &emsp; &emsp; &emsp; &emsp; {20}  
+  &emsp; $\psi_{m, l} = e^1$
+  + Compared with FFT, the frequency bins of the reconstructed spectrum by SSR are significantly increased. The spectral power of the respiration harmonics and noise is further suppressed with the introduction of sparse constraint, and the peaks related to RR and HR become dominant.
+  + SSR에 의해 reconstructed spectrum의 freq. bin은 FFT와 비교하여 상당히 증가되었다. 호흡의 하모닉과 노이즈의 스펙트럼 파워는 supressed.
+
   
 
 
