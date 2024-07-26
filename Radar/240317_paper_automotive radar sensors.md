@@ -1,32 +1,32 @@
-# Title ?
-> [참조](https://grauonline.de/wordpress/?page_id=2045)
-
+# [Title ?](https://grauonline.de/wordpress/?page_id=2045)
 - simple and effective vital sign algorithm
 - infineon 24GHz FMCW
 - vital signs (breathing and heartbeat)을 얻기 위해 radar의 중간주파수에서 DC를 제거하고, distance-dimensional FFT와 위상처리 진행
 - heart와 breath를 분리하기 위한 filter
 - 호흡 고조파가 심박주파수 추출 ㅅ; 영향을 제거하기 위해 2차 차분과 notch 필터 사용
 
-[related work]  
+## [related work]()   
 - 디지털 헤테로다인 직교 아키텍처 수신기 구조는 DC 잡음 감소에 효과적임[4], 그러나 하드웨어 비용이 높다.  
 - 호흡 고조파가 심장 박동에 미치는 영향을 줄이기 위해 RELAX 알고리즘으로 기저대역 신호를 처리[5], 그러나 알고리즘의 복잡성이 높다.  
 - 기계 학습을 사용하여 호흡 고조파를 제거[6], 훈련을 위해 많은 수의 데이터 세트에 의존해야 한다.  
 
-[principle]  
+## [principle]()   
 
 &emsp; ![FMCW_Radar_Architecture](https://ieeexplore.ieee.org/mediastore_new/IEEE/content/media/10275796/10276388/10277450/liu1-p3-liu-small.gif)  
-&emsp; <그림 1. >
+&emsp; < 그림 1. >
 
-- 중간주파수$IF(t)$는  
-  + $IF(t) = \LARGE{ A_{IF} e^{ {j 2 \pi f_b t + \frac{4 \pi R(t)}{\lambda _c} } } }$ &emsp;&emsp; $(1)$
-    > + $A_{IF}$ : the amplitude of IF signal
-    > + the real-time distance between human target and radar $R(t) =R0 + x(t)$
-    > + $R_0$ : distance between the target and the radar when it is relatively stationary
-    > + $x(t)$ : body surface change caused by breathing and heartbeat
-    > + $f_b$ : frequency of IF signal, and its expression is
-  + $f_b = \frac{{2BR(t)}}{{c{T_c}}} $, &emsp;&emsp; $(2)$
-    > + 여기서, $B$는 radar bandwidth, $C$는 빛의 속도
-    > + $T_c$ : time to transmit a chirp.  
+- 중간 주파수 $IF(t)$는  
+  &emsp; [Eq. 1] &emsp; $IF(t) = \large{A_{IF} \epsilon^{ j 2 \pi f_b t + \frac{4 \pi R(t)}{\lambda c} }
+					}$   
+&emsp; &emsp; &emsp; + $A_{IF}$ : the amplitude of IF signal  
+&emsp; &emsp; &emsp; + the real-time distance between human target and radar $R(t) =R0 + x(t)$  
+&emsp; &emsp; &emsp; + $R_0$ : distance between the target and the radar when it is relatively stationary  
+&emsp; &emsp; &emsp; + $x(t)$ : body surface change caused by breathing and heartbeat  
+&emsp; &emsp; &emsp; + $f_b$ : frequency of IF signal, and its expression is Eq. 2  
+
+  &emsp; [Eq. 2] &emsp; $f_b = \frac{{2BR(t)}}{{c{T_c}}}$  
+&emsp; &emsp; &emsp; + 여기서, $B$는 radar bandwidth, $C$는 빛의 속도  
+&emsp; &emsp; &emsp; + $T_c$ : time to transmit a chirp.  
 
 [Vital Sign Signal Detection Algorithm]
 - Eliminate DC
