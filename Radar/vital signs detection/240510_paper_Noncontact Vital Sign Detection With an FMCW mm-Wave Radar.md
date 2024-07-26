@@ -191,12 +191,28 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 - The vector $e=[e_1, e_2, … ,e_L]^T$은 adaptive filter coefficient vector $ω(k)$에 해당한다   
   + Recursive least square (RLS)는 연속 제곱 오류 시퀀스의 가중 합으로 정의되는 cost function으로 최근 매력을 느꼈다.  
 &emsp; [Eq. 22] &emsp; $ξ_{RLS} (k) = \displaystyle\sum_{u=1} ^k β^{k−u}|η(u)|^2$  
-&emsp; &emsp; - $0 ≤ β < 1$은 forgetting factor(무시할 수 있는 factor),  
-&emsp; &emsp; - $η(u) = h_m − ψ_m e(k)$는 recursion error of SSR,  
-&emsp; &emsp; - $m = mod(u,M) + 1$는 나머지 함수   
+&emsp; &emsp; + $0 ≤ β < 1$은 forgetting factor(무시할 수 있는 factor),  
+&emsp; &emsp; + $η(u) = h_m − ψ_m e(k)$는 recursion error of SSR,  
+&emsp; &emsp; + $m = mod(u,M) + 1$는 나머지 함수   
+- standard RLS algorithm은 sparse solution을 직접 generate할 수 없다. $\espilon (k)의 $L_1$ 표준 $||esplion(k)||을 사용하여 달성할 수 있는 희소 패널티 함수가 필요하다  
+- 최종 cost function은  
+  &emsp; [Ep. 23] &emsp; $ξ_{ZA−EFLMS}(k) = \displaystyle\sum_{u = 1} ^k β^{k−u}|η(u)|^2 + γ∥e(k)∥_1$
 
+&emsp; &emsp; + $γ$ :regularization parameter that aims to counterbalance the gradient correction and sparse constraint.  
 
+- gradient descent recursion of the heartbeat signal spectrum vector는  
+&emsp; [Eq. 24] &emsp; $∇e(k+1) = \large{ \frac{ ∂ξ_{ZA−EFLMS}(k) } { ∂e(k) } } $  
+&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= -2 \displaystyle\sum_{u = 1} ^{k} \beta^{k-u} \psi_m (h_m - \psi_m e(k)) + γ sgn(e(k))$  
+&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= -2 \displaystyle\sum_{u = 1} ^{k} \beta^{k-u} \psi_m η(u) + γ sgn(e(k))$
 
+  &emsp; [Eq. 25] &emsp; $e(k + 1) = e(k) + \frac{1}{2} \mu(-∇)$  
+&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= e(k) + \mu Θ Λ η(k) - ς sgn(e(k))$  
+&emsp; &emsp; &emsp; $Θ : [α_1, α_2, … , α_k]$  
+&emsp; &emsp; &emsp; $α_u : [ψ_{m1}, ψ_{m2}, … , ψ_{mL}], u ∈ {1, 2, … , k}$  
+&emsp; &emsp; &emsp; $Λ : diag{β^{k−1}, β^{k−2}, …, 1}$  
+&emsp; &emsp; &emsp; $η(k) : [η(1), η(2), …, η(k)]^T$  
+&emsp; &emsp; &emsp; $μ$ : step size, $ς=γμ$ : zero attraction factor, $sgn(⋅)$ : componentwise sign function  
+&emsp; &emsp; &emsp; &emsp; $sgn(⋅)$ : $A_{m,n} = \frac{k}{|k|}, if k ≠ 0, or 0, otherwise$ 
 
 --- 
 
