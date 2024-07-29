@@ -176,43 +176,59 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; &emsp; $\Psi$는 $M x L$ basis matrix  
   &emsp; $\psi_{m, l} = e^{j \frac{2\pi}{L} ml}$, $m = 1, 2, ... , M$; $l = 1, 2, ... , L$ &emsp; &emsp; &emsp; &emsp; {20}  
   + Compared with FFT, the frequency bins of the reconstructed spectrum by SSR are significantly increased. The spectral power of the respiration harmonics and noise is further suppressed with the introduction of sparse constraint, and the peaks related to RR and HR become dominant.
-  + SSR에 의해 reconstructed spectrum의 freq. bin은 FFT와 비교하여 상당히 증가되었다. 희소 제약 조건을 적용하면, 호흡의 하모닉과 노이즈의 스펙트럼 파워는 supress되고 RR과 HR과 관련된 peak가 지배적이 된다.
+  + SSR에 의해 reconstructed spectrum의 freq. bin은 FFT와 비교하여 상당히 증가되었다. 희소 제약 조건을 적용하면, 호흡의 하모닉과 노이즈의 스펙트럼 파워는 supress되고 RR과 HR과 관련된 peak가 지배적이 된다.  
 
 ### 2) ZA-SEFLMS Algorithm for SSR Based on Adaptive Filter
 - adaptive filter는 구조가 simple하고 간섭 관련 성능이 우수하여 널리 이용되고 있음
 - 적응 필터의 추정 오류 $\epsilon (k)$는  
-&emsp; [Eq. 21] &emsp; $\epsilon (k) = \rho(k) - v^T (k) \omega(k)$  
-&emsp; &emsp; + $\rho(k)$는 원하는 신호,  
-&emsp; &emsp; + $k$는 시간 요소(또는 객체 요소, instance),  
-&emsp; &emsp; + $\omega(k) = [\omega_0(k), \omega_1(k), ... , \omega_{ ι -1}(k)]^T$,  
-&emsp; &emsp; + $v(k) = [v(k), v(k-1), ... , v(k- ι +1)]^T$는 adaptive filter coefficient vector와 input vector, $ ι $는 filter length 이다  
-- $ψ_m=[ψ_{m1},ψ_{m2}, … , ψ_{ML}], m∈{1,2,…,M}$은 적응 필터의 input 벡터($v^T(k)$)에 해당하는 $Ψ$의 row vector이다  
-- $h$의 요소 $h_m, m ∈ {1, 2, ..., M}$은 $ψ_m$은 원하는 신호 $\rho(k)$에 해당한다  
+
+  &emsp; [Eq. 21] &emsp; $\epsilon (k) = \rho(k) - v^T (k) \omega(k)$  
+  &emsp; &emsp; + $\rho(k)$는 원하는 신호,  
+  &emsp; &emsp; + $k$는 시간 요소(또는 객체 요소, instance),  
+  &emsp; &emsp; + $\omega(k) = [\omega_0(k), \omega_1(k), ... , \omega_{ ι -1}(k)]^T$,   
+  &emsp; &emsp; + $v(k) = [v(k), v(k-1), ... , v(k- ι +1)]^T$는 adaptive filter coefficient vector와 input vector,  
+  &emsp; &emsp; + $ ι $는 filter length
+  
+- $ψ_m=[ψ_{m1},ψ_{m2}, … , ψ_{ML}], m ∈ ${1, 2, … , M}은 적응 필터의 input 벡터($v^T(k)$)에 해당하는 $Ψ$의 row vector이다  
+- $h$의 요소 $h_m, m ∈ $ {1, 2, ..., M}은 $ψ_m$은 원하는 신호 $\rho(k)$에 해당한다  
 - The vector $e=[e_1, e_2, … ,e_L]^T$은 adaptive filter coefficient vector $ω(k)$에 해당한다   
-  + Recursive least square (RLS)는 연속 제곱 오류 시퀀스의 가중 합으로 정의되는 cost function으로 최근 매력을 느꼈다.  
-&emsp; [Eq. 22] &emsp; $ξ_{RLS} (k) = \displaystyle\sum_{u=1} ^k β^{k−u}|η(u)|^2$  
-&emsp; &emsp; + $0 ≤ β < 1$은 forgetting factor(무시할 수 있는 factor),  
-&emsp; &emsp; + $η(u) = h_m − ψ_m e(k)$는 recursion error of SSR,  
-&emsp; &emsp; + $m = mod(u,M) + 1$는 나머지 함수   
+  + Recursive least square (RLS)는 연속 제곱 오류 시퀀스의 가중 합으로 정의되는 cost function (최근 관심 증가)  
+
+  &emsp; [Eq. 22] &emsp; $ξ_{RLS} (k) = \displaystyle\sum_{u=1} ^k β^{k−u}|η(u)|^2$  
+  &emsp; &emsp; + $0 ≤ β < 1$은 forgetting factor(무시할 수 있는 factor),  
+  &emsp; &emsp; + $η(u) = h_m − ψ_m e(k)$는 recursion error of SSR,  
+  &emsp; &emsp; + $m = mod(u,M) + 1$는 나머지 함수
+  
 - standard RLS algorithm은 sparse solution을 직접 generate할 수 없다. $\espilon (k)의 $L_1$ 표준 $||esplion(k)||을 사용하여 달성할 수 있는 희소 패널티 함수가 필요하다  
 - 최종 cost function은  
-  &emsp; [Ep. 23] &emsp; $ξ_{ZA−EFLMS}(k) = \displaystyle\sum_{u = 1} ^k β^{k−u}|η(u)|^2 + γ∥e(k)∥_1$
 
-&emsp; &emsp; + $γ$ :regularization parameter that aims to counterbalance the gradient correction and sparse constraint.  
+  &emsp; [Ep. 23] &emsp; $ξ_{ZA−EFLMS}(k) = \displaystyle\sum_{u = 1} ^k β^{k−u}|η(u)|^2 + γ∥e(k)∥_1$
+  &emsp; &emsp; + $γ$ :regularization parameter that aims to counterbalance the gradient correction and sparse constraint.  
 
 - gradient descent recursion of the heartbeat signal spectrum vector는  
-&emsp; [Eq. 24] &emsp; $∇e(k+1) = \large{ \frac{ ∂ξ_{ZA−EFLMS}(k) } { ∂e(k) } } $  
-&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= -2 \displaystyle\sum_{u = 1} ^{k} \beta^{k-u} \psi_m (h_m - \psi_m e(k)) + γ sgn(e(k))$  
-&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= -2 \displaystyle\sum_{u = 1} ^{k} \beta^{k-u} \psi_m η(u) + γ sgn(e(k))$
+
+  &emsp; [Eq. 24] &emsp; $∇e(k+1) = \large{ \frac{ ∂ξ_{ZA−EFLMS}(k) } { ∂e(k) } } $  
+  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= -2 \displaystyle\sum_{u = 1} ^{k} \beta^{k-u} \psi_m (h_m - \psi_m e(k)) + γ sgn(e(k))$  
+  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= -2 \displaystyle\sum_{u = 1} ^{k} \beta^{k-u} \psi_m η(u) + γ sgn(e(k))$  
 
   &emsp; [Eq. 25] &emsp; $e(k + 1) = e(k) + \frac{1}{2} \mu(-∇)$  
-&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= e(k) + \mu Θ Λ η(k) - ς sgn(e(k))$  
-&emsp; &emsp; &emsp; $Θ : [α_1, α_2, … , α_k]$  
-&emsp; &emsp; &emsp; $α_u : [ψ_{m1}, ψ_{m2}, … , ψ_{mL}], u ∈ {1, 2, … , k}$  
-&emsp; &emsp; &emsp; $Λ : diag{β^{k−1}, β^{k−2}, …, 1}$  
-&emsp; &emsp; &emsp; $η(k) : [η(1), η(2), …, η(k)]^T$  
-&emsp; &emsp; &emsp; $μ$ : step size, $ς=γμ$ : zero attraction factor, $sgn(⋅)$ : componentwise sign function  
-&emsp; &emsp; &emsp; &emsp; $sgn(⋅)$ : $A_{m,n} = \frac{k}{|k|}, if k ≠ 0, or 0, otherwise$ 
+  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= e(k) + \mu Θ Λ η(k) - ς sgn(e(k))$  
+
+  &emsp; &emsp; + $Θ : [α_1, α_2, … , α_k]$  
+  &emsp; &emsp; + $α_u : [ψ_{m1}, ψ_{m2}, … , ψ_{mL}], u ∈ {1, 2, … , k}$  
+  &emsp; &emsp; + $Λ : diag{β^{k−1}, β^{k−2}, …, 1}$  
+  &emsp; &emsp; + $η(k) : [η(1), η(2), …, η(k)]^T$  
+  &emsp; &emsp; + $μ$ : step size, $ς=γμ$ : zero attraction factor, $sgn(⋅)$ : componentwise sign function  
+  &emsp; &emsp; &emsp; -. $sgn(⋅) : A_{m,n} = \frac{k}{|k|}$, if k ≠ 0, or 0, otherwise  
+
+- some noise는 VS 신호감지 성능이 감소되는 불안정한 gradient descent(경사하강법)으로 인해 pulse 감쇠를 일으킬 수 있다. 갑작스런 pulse 간섭을 억제하기 위해 recursion error(재귀오류) $η(k)$를 제한하는 $sgn(⋅)$ 함수 적용
+- As a result, the novel recursion updating equation is
+
+  &emsp; [Eq. 30] &emsp; $e(k+1) = e(k) + 12μ(−∇)$  
+  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; $= e(k) + μΘΛsgn(η(k))−ςsgn(e(k))$  
+
+- reconstructed heartbeat spectrum $|e(k)|^2$은 iterative calculation based on (30).
+- Similarly, the respiration spectrum $|w(k)|^2$도 얻을 수 있다.
 
 --- 
 
