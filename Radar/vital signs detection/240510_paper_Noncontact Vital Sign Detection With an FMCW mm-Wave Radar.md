@@ -229,6 +229,17 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 
 - reconstructed heartbeat spectrum $|e(k)|^2$은 iterative calculation based on (30).
 - Similarly, the respiration spectrum $|w(k)|^2$도 얻을 수 있다.
+- FFT와 ZA-SEFLMS사이의 RR estimation 결과는 1(a)다.  
+  
+  <ol><li> FFT와 ZA-SEFLMS사이의 RR estimation 결과 </li></ol> 
+  <img src = https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao5ab-3250500-small.gif>
+
+- FFT의 spectrum은 noise에 의해 더렵혀진다. 반면에, ZA-SEFLMS는 clean하다.
+- FFT와 ZA-SEFLMS사이의 HR estimation 결과는 1(b).
+  + FFT의 가장 높은 peak에 해당하는 frequency는 heartbeat frequency가 아닌 3차 호흡 고조파이다. 
+  + FFT spectrum은 간섭(환경이나 신체로부터 발생된)으로부터 어려움을 겪는다.
+
+
 
 --- 
 
