@@ -185,8 +185,8 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; [Eq. 21] &emsp; $\epsilon (k) = \rho(k) - v^T (k) \omega(k)$  
   &emsp; &emsp; + $\rho(k)$는 원하는 신호,  
   &emsp; &emsp; + $k$는 시간 요소(또는 객체 요소, instance),  
-  &emsp; &emsp; + $\omega(k) = [\omega_0(k), \omega_1(k), ... , \omega_{ ι -1}(k)]^T$,   
-  &emsp; &emsp; + $v(k) = [v(k), v(k-1), ... , v(k- ι +1)]^T$는 adaptive filter coefficient vector와 input vector,  
+  &emsp; &emsp; + $\omega(k) = [\omega_0(k), \omega_1(k), ... , \omega_{ ι -1}(k)]^T$ : adaptive filter coefficient vector,   
+  &emsp; &emsp; + $v(k) = [v(k), v(k-1), ... , v(k- ι +1)]^T$ : input vector,  
   &emsp; &emsp; + $ ι $는 filter length
   
 - $ψ_m=[ψ_{m1},ψ_{m2}, … , ψ_{ML}], m ∈ ${1, 2, … , M}은 적응 필터의 input 벡터($v^T(k)$)에 해당하는 $Ψ$의 row vector이다  
@@ -199,10 +199,10 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; &emsp; + $η(u) = h_m − ψ_m e(k)$는 recursion error of SSR,  
   &emsp; &emsp; + $m = mod(u,M) + 1$는 나머지 함수
   
-- standard RLS algorithm은 sparse solution을 직접 generate할 수 없다. $\espilon (k)의 $L_1$ 표준 $||esplion(k)||을 사용하여 달성할 수 있는 희소 패널티 함수가 필요하다  
+- standard RLS algorithm은 sparse solution을 직접 generate할 수 없다. $\epsilon (k)$의 $L_1$ 표준 $||\epsilon(k)||$을 사용하여 달성할 수 있는 희소 패널티 함수가 필요하다  
 - 최종 cost function은  
 
-  &emsp; [Ep. 23] &emsp; $ξ_{ZA−EFLMS}(k) = \displaystyle\sum_{u = 1} ^k β^{k−u}|η(u)|^2 + γ∥e(k)∥_1$
+  &emsp; [Ep. 23] &emsp; $ξ_{ZA−EFLMS}(k) = \displaystyle\sum_{u = 1} ^k β^{k−u}|η(u)|^2 + γ∥e(k)∥$  
   &emsp; &emsp; + $γ$ :regularization parameter that aims to counterbalance the gradient correction and sparse constraint.  
 
 - gradient descent recursion of the heartbeat signal spectrum vector는  
@@ -218,8 +218,9 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; &emsp; + $α_u : [ψ_{m1}, ψ_{m2}, … , ψ_{mL}], u ∈ {1, 2, … , k}$  
   &emsp; &emsp; + $Λ : diag{β^{k−1}, β^{k−2}, …, 1}$  
   &emsp; &emsp; + $η(k) : [η(1), η(2), …, η(k)]^T$  
-  &emsp; &emsp; + $μ$ : step size, $ς=γμ$ : zero attraction factor, $sgn(⋅)$ : componentwise sign function  
-  &emsp; &emsp; &emsp; -. $sgn(⋅) : A_{m,n} = \frac{k}{|k|}$, if k ≠ 0, or 0, otherwise  
+  &emsp; &emsp; + $μ$ : step size, 
+  &emsp; &emsp; + $ς=γμ$ : zero attraction factor,  
+  &emsp; &emsp; + componentwise sign function, $sgn(⋅)$ : A_{m,n} = \frac{k}{|k|}$, if k ≠ 0, or 0, otherwise  
 
 - some noise는 VS 신호감지 성능이 감소되는 불안정한 gradient descent(경사하강법)으로 인해 pulse 감쇠를 일으킬 수 있다. 갑작스런 pulse 간섭을 억제하기 위해 recursion error(재귀오류) $η(k)$를 제한하는 $sgn(⋅)$ 함수 적용
 - As a result, the novel recursion updating equation is
@@ -237,7 +238,33 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 - FFT의 spectrum은 noise에 의해 더렵혀진다. 반면에, ZA-SEFLMS는 clean하다.
 - FFT와 ZA-SEFLMS사이의 HR estimation 결과는 1(b).
   + FFT의 가장 높은 peak에 해당하는 frequency는 heartbeat frequency가 아닌 3차 호흡 고조파이다. 
-  + FFT spectrum은 간섭(환경이나 신체로부터 발생된)으로부터 어려움을 겪는다.
+  + FFT spectrum은 간섭(환경이나 신체로부터 발생된)으로부터 어려움을 겪는다. 
+
+
+## Performance Evaluation
+### 1) Experimental Settings
+
+
+### 2) Experimental Results
+
+
+### 3) Effects of Distance
+-  The mean error for HR estimation of mmRH increases from 0.27 to 2.16 beats per minute (BPM) with the increment of the distance from 0.5 to 3.0 m.
+  + For RR estimation, it can be found that the mean error of mmRH is within 0.15 BPM when the distance is less than 1.5 m.
+  +  The mean error increases to 0.39 BPM with the increase in distance to 3 m.
+
+### 4) Effects of Sensor Position  
+- the mean error increases with increasing angle. The main reason is that as the angle between the human subject and the radar becomes larger, the SNR of the reflected signal becomes smaller and smaller.
+- However, the performance of RR estimation is better than HR due to its high SNR. 
+- Furthermore, it is apparent that the mmRH performs better than other methods, especially for HR estimation.  
+<img src = https://ieeexplore.ieee.org/mediastore/IEEE/content/media/7361/10102602/10058900/xiao9abc-3250500-small.gif>  
+
+
+
+
+
+
+
 
 
 
