@@ -117,7 +117,9 @@ various deterministic methods for VS Estimation" width="700px" height="200x">
   &emsp; &emsp; &emsp; ... $\Delta \psi_{k, k+1}$ : 에코에서 관측된 phase 변화  
   &emsp; &emsp; +. $\delta_{b,M}$이 호흡에 의한 chest 변위_최대값이라면, 가슴 움직임을 감지하는데 충분한 해상도는 아래 식을 만족해야 한다.    
   &emsp; &emsp; &emsp; $\LARGE{ \frac{\Delta R_{k, k+1}}{T_0} \ge \frac{2\delta_{b,M}}{T_{B,R}} }$  
-  &emsp; &emsp; &emsp; $T_0 \le \LARGE{ \frac{2 \delta_{b,M}}{T_{B,R}} }R_{k, k+1}$ &emsp; or &emsp; $T_0 \le \LARGE{ \frac{T_{B,R}}{2 \delta_{b,M}} \frac{\lambda}{4\pi} } \Delta \hat{\psi}_{k, k+1}$ &emsp; &emsp; &emsp; &emsp; --- (82)  
+  &emsp; &emsp; &emsp; $T_0 \le \LARGE{ \frac{2 \delta_{b,M}}{T_{B,R}} }R_{k, k+1}$ &emsp;
+  or &emsp; $T_0 \le \LARGE{ \frac{T_{B,R}}{2 \delta_{b,M}} \frac{\lambda}{4\pi} } \Delta \hat{\psi}_{k, k+1}$ &emsp; &emsp; &emsp; &emsp; --- (82)  
+  
   &emsp; &emsp; +. $δ_{b,M}$과 $4λ$가 같다(where $λ ≅ 4 mm$)고 가정하면, 위상 모호성(ambiguity)을 피하기 위해 부등식 $Δψ_{k,k+1} < 2π$가 만족되어야 한다.  
   &emsp; &emsp; +. from (82)로부터 (83)이 추론된다.  
   &emsp; &emsp; &emsp; $\LARGE{ \frac{1}{T_0} > \frac{16}{T_{BR}} }$ &emsp; &emsp; &emsp; &emsp; --- (83)   
