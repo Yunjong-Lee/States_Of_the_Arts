@@ -14,21 +14,21 @@ layout: post
 
 ## 2. Introduction
 - ~~Monitoring human vital signs, such heart and respiration rates, represents a routine practice to detect patient deterioration. Changes in vital signs can reveal the existence of serious medical problems; for this reason, early identification of these changes can improve survival rates in several conditions [1]. Vital signs monitoring is often accomplished by means of wearable health devices [2]; this is due to the fact that these devices enable continuous monitoring during daily activities. However, in various situations, such as in the case of infected patients or of patients suffering from mental illness or affected by severe burns or injuries, the use of wearable sensors is not possible or recommended. In such cases, the use of noncontact monitoring devices, such as radar systems, can help healthcare professionals by providing critical information about patient state [3].~~ 
-- The application of radar devices to this field and, in particular, to the estimation of heart and respiration rates has become an active research area in recent years [^4], [^5], [^6], [^7]. 
-  + the first experimental results in this field date back to 1975, when the use of short-range radar technology was proposed to noninvasively acquire respiratory information by comparing a microwave signal with its echo reflected from the chest of a patient [8], [9]. ~~In the following years, the possibility of employing radar systems for the wireless detection of the physiological movements due to both heartbeat and respiration has been shown [10], [11], [12], [13]. This has motivated the investigation of the use of this technology in a number of medical applications, including adult and neonatal sleep monitoring [14], [15], [16], disaster medicine (e.g., in the detection of human vital signs under rubbles after earthquakes [17]), and lung cancer radiotherapy [18].~~
-  + radar-based monitoring of vital signs have been published [^13], [^19], [^20], [^21], [^22], [^23], [^24]
-  + doppler radar, UWB radar with signle tx/rx Ant.: 13, 19, 20, 21
-  + array Ant. : 22
+- The application of radar devices to this field and, in particular, to the estimation of heart and respiration rates has become an active research area in recent years [^4][^5][^6][^7]. 
+  + the first experimental results in this field date back to 1975, when the use of short-range radar technology was proposed to noninvasively acquire respiratory information by comparing a microwave signal with its echo reflected from the chest of a patient [8][9]. ~~In the following years, the possibility of employing radar systems for the wireless detection of the physiological movements due to both heartbeat and respiration has been shown [10][11][12][13]. This has motivated the investigation of the use of this technology in a number of medical applications, including adult and neonatal sleep monitoring [14][15][16], disaster medicine (e.g., in the detection of human vital signs under rubbles after earthquakes [17]), and lung cancer radiotherapy [18].~~
+  + radar-based monitoring of vital signs have been published [^13][^19][^20][^21][^22][^23][^24]
+  + doppler radar, UWB radar with signle tx/rx Ant.: [^13][^19][^20][^21]
+  + array Ant. : [^22]
 
 
 ## 3. Radar for Vital Signs Monitoring: Basic principles, Objectives, and Challenges
-- system consists of a tx and a rx.
-- Target range and velocity can be estimated with a single tx/rx Ant..
-  - measurement of the distance of any target from a given radar system is based on the estimation of the propagation delay of the received waves.
-  - measurement of the velocity of target is based on the estimation of the structral changes in wave (표적이 레이더에 접근하거나 멀어지는 경우 도플러 효과로 인해 수신된 전파의 주파수 변화가 관찰됨)
-  - measurement of the angular coordinates of any target requires at least two rx Ant. (Object에 충돌하는 전자기파의 DOA 추정).
+- system consists: 
+  + single TX/RX ANT. (Target range and velocity can be estimated).
+  + measurement of the distance of any target : the propagation delay (the received waves)
+  + measurement of the velocity of target : the structral changes in wave (표적이 레이더에 접근하거나 멀어지는 경우 도플러 효과로 인해 수신된 전파의 주파수 변화가 관찰됨)
+  + measurement of the angular coordinates : at least two RX ANT (Object에 충돌하는 전자기파의 DOA 추정).
 
-- body movement(흉벽의 움직임)가 준주기적 진동을 가지며, 이러한 진동이 파동을 변조한다. 그러므로 반사된 전자파로부터 VS에 대한 HR과 BR을 추출할 수 있음[^27], [^28]
+- body movement(흉벽의 움직임)는 준주기적 진동을 가지며, 이러한 진동이 파동을 변조한다. 그러므로 반사된 echo 신호로부터 HR과 BR을 추출할 수 있음[^27][^28][^29]
 
 - VS Monitoring
   + BR 신호 추출 및 추정, 추출된 BR에서 HR 추정
@@ -124,16 +124,16 @@ various deterministic methods for VS Estimation" width="700px" height="200x">
   &emsp; &emsp; +. from (82)로부터 (83)이 추론된다.  
   &emsp; &emsp; &emsp; $\LARGE{ \frac{1}{T_0} > \frac{16}{T_{BR}} }$ &emsp; &emsp; &emsp; &emsp; --- (83)   
   &emsp; -. 프레임 속도는 호흡 frequency보다 높아야 하며, HR의 변위에 대해서도 $T_{B,R}$을 $T_{H,R}$로 대체한 다음 유사하게 공식화 할 수 있다.  
-  &emsp; -. BR 및 HR 추정에서 충분한 정확도를 얻으려면, 프레임 속도 $\frac{1}{T_0}$의 선택이 중요함.
+  &emsp; -. BR 및 HR 추정에서 충분한 정확도를 얻으려면, 프레임 속도 $\frac{1}{T_0}$의 선택이 중요함.  
   &emsp; &emsp; +. BR의 frame 속도:  
-  &emsp; &emsp; +. HR의 frame 속도: $^{50 ⁓ 100}/_{60 [sec]}, 1 ⁓ 1.67 [Hz]$
+  &emsp; &emsp; +. HR의 frame 속도: $\LARGE{ ^{50 ⁓ 100}/_{60 [sec]} }$ $, 1 ⁓ 1.67 [Hz]$
 
-  |         | BR                                   | HR                                     |
-  | ------- | ------------------------------------ | -------------------------------------- |
-  | general | $^{10~25}/_{60 [sec]}, 0.2 ~ 0.4 Hz$ | $^{50 ~ 100}/_{60 [sec]}, 1 ~ 1.67 Hz$ | 
-  | stress  | $^{~40}/_{60 [sec]},  ~ 0.67 Hz$     | $^{ ~ 180}/_{60 [sec]}, ~ 3 Hz$        | 
+  |  case   | BR         | HR           |
+  | ------- | ---------  | -------------|
+  | general | $\LARGE{ ^{10∼25}/_{60 [sec]} }$, $0.2∼0.4 Hz$ | $\LARGE{ ^{50∼100}/_{60 [sec]} }$, $1∼1.67 Hz$ | 
+  | stress  | $\LARGE{ ^{∼40}/_{60 [sec]} }$, $∼0.67 Hz$ | $\LARGE{ ^{∼180}/_{60 [sec]} }$, $∼3 Hz$        | 
 
-  &emsp; &emsp; &emsp; +. (83)을 기반으로, 프레임 속도는 정지 상태에서 25Hz, 스트레스 상태에서는 45Hz 정도이며, 프레임 속도와 별개로 활력 징후에 대한 정확한 추정치를 생성하려면 충분히 긴 관찰 시간이 필요  
+  &emsp; &emsp; +. (83)을 기반으로, 프레임 속도는 정지 상태에서 25Hz, 스트레스 상태에서는 45Hz 정도이며, 프레임 속도와 별개로 활력 징후에 대한 정확한 추정치를 생성하려면 충분히 긴 관찰 시간이 필요  
   
   + angular resolution  
 
@@ -155,9 +155,9 @@ various deterministic methods for VS Estimation" width="700px" height="200x">
 [^22]: E. Cardillo and A. Caddemi, "A review on biomedical MIMO radars for vital sign detection and human localization", Electronics, vol. 9, no. 9, pp. 1497, Sep. 2020.  
 [^23]: C. Li et al., "A review on recent progress of portable short-range noncontact microwave radar systems", IEEE Trans. Microw. Theory Techn., vol. 65, no. 5, pp. 1692-1706, May 2017.  
 [^24]: S. Pisa, E. Pittella and E. Piuzzi, "A survey of radar systems for medical applications", IEEE Aerosp. Electron. Syst. Mag., vol. 31, no. 11, pp. 64-81, Nov. 2016.  
-[^27]:   
-[^28]:  
-
+[^27]: S. Schellenberger, K. Shi, F. Michler, F. Lurz, R. Weigel and A. Koelpin, "Continuous in-bed monitoring of vital signs using a multi radar setup for freely moving patients", Sensors, vol. 20, no. 20, pp. 5827, Oct. 2020.  
+[^28]: X. Yang, Y. Yu, H. Qian, X. Zhang and L. Zhang, "Body orientation and vital sign measurement with IR-UWB radar network", Proc. 42nd Annu. Int. Conf. IEEE Eng. Med. Biol. Soc. (EMBC), pp. 485-488, Jul. 2020.  
+[^29]: G. Sacco, E. Piuzzi, E. Pittella and S. Pisa, "An FMCW radar for localization and vital signs measurement for different chest orientations", Sensors, vol. 20, no. 12, pp. 3489, Jun. 2020.  
 [^61]: 
 
 
