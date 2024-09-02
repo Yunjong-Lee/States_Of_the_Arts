@@ -81,9 +81,9 @@ layout: post
                             \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i×(nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ]
                                             }$  
 
-  &emsp; &emsp; + $T_f, T_s$는 time interval corresponding to the fast time and slow time, respectively.  
-  &emsp; &emsp; + $d_i(t)$는  $i-th$ range bin에 있는 object와 radar 사이의 range  
-  &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d}_i + \hat{d}_i(t)$  
+  &emsp; &emsp; + $T_f$와 $T_s$는 time interval corresponding to the fast time and slow time, respectively.  
+  &emsp; &emsp; + $d_i(t)$는  i'th range bin에 있는 object와 radar 사이의 range로   
+  &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d_i} + \hat{d_i}(t)$   
   &emsp; &emsp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
   
 - Eq. (8)과 (9) 기반으로, m_th chirp $f_b$의 frequency는
