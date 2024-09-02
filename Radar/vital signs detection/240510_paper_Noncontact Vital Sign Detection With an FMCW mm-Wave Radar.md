@@ -1,7 +1,8 @@
 ---
 date: 2024-05-10 09:56:11
 layout: post
----
+---  
+
 
 # [Noncontact Vital Sign Detection With an FMCW mm-Wave Radar](https://ieeexplore.ieee.org/abstract/document/10058900)  
 - IEEE Sensors Journal, Volume: 23, Issue: 8, 15 April 2023  
@@ -85,7 +86,8 @@ layout: post
   &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d}_i + \hat{d}_i(t)$  
   &emsp; &emsp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
   
-- Eq. (8)과 (9) 기반으로, m_th chirp $f_b$의 frequency는    
+- Eq. (8)과 (9) 기반으로, m_th chirp $f_b$의 frequency는
+    
   &emsp; - [Eq. 10] &emsp; $f_b = \LARGE{ 
                                         \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} 
                                         }$   
