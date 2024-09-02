@@ -75,30 +75,30 @@ layout: post
 
 ## A. Vital Sign Signal Extraction Module  
 
-- n번째 ADC 샘플과 m번째 처프에 대해, signal $y(n,m)$ can be expressed as  
+- n_번째 ADC sample과 m_번째 chirp에 대해, signal $y(n,m)$는  
 
-  &emsp; ㅁ [Eq. 8] - &emsp; $y(n,m) = \large{
-                                              \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp ( j(2\pi \frac{2 B d_i × (n T_f)} {c T_d} n T_f + 4 \pi \frac{d_i (nT_f + n T_s)}{\lambda} ) ) }$  
+  &emsp; ㅁ [Eq. 8] &emsp; $y(n,m) = \large{
+                                            \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp ( j(2\pi \frac{2 B d_i × (n T_f)} {c T_d} n T_f + 4 \pi \frac{d_i (nT_f + n T_s)}{\lambda} ) ) }$  
 
-  &emsp; &emsp; + $T_f$와 $T_s$는 time interval corresponding to the fast time and slow time, respectively.  
-  &emsp; &emsp; + $d_i (t)$는  i'th range bin에 있는 object와 radar 사이의 range로
+  &emsp; &emsp; . $T_f$와 $T_s$는 time interval corresponding to the fast time and slow time, respectively.  
+  &emsp; &emsp; . $d_i (t)$는  i'th range bin에 있는 object와 radar 사이의 range로
   
-  &emsp; &emsp; &emsp; ㅁ [Eq. 9] - &emsp; $d_i (t) = \hat{d_i} + \hat{d_i}(t)$
+  &emsp; &emsp; ㅁ [Eq. 9] &emsp; $d_i (t) = \hat{d_i} + \hat{d_i}(t)$
   
-  &emsp; &emsp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
+  &emsp; &emsp; . $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
   
 - Eq. (8)과 (9) 기반으로, m_th chirp $f_b$의 frequency는
     
-  &emsp; ㅁ [Eq. 10] - &emsp; $f_b = \LARGE{
-                                           \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$
+  &emsp; ㅁ [Eq. 10] &emsp; $f_b = \LARGE{
+                                          \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$
   
   &emsp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency 변화가 적기때문에 무시할 수 있다  
   &emsp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time 영역을 FFT (range FFT라고 함)
   
-  &emsp; &emsp; ㅁ [Eq. 11] - &emsp; $z(i, m) = \large{
-                                                      \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) }$
+  &emsp; ㅁ [Eq. 11] &emsp; $z(i, m) = \large{
+                                              \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) }$
   
-  &emsp; &emsp; &emsp; . i : range bin index
+  &emsp; &emsp; . i : range bin index
   
   &emsp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
   &emsp; &emsp; . empty bin의 예 : wall, desk, or metal objects 등  
@@ -136,10 +136,10 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 - HR 추정시 호흡 고조파와 Noise의 영향을 완화하기 위해 VS 신호 추출 후 1'st temporal difference가 수행된다.  
   &ensp; : 1'st order temporal difference가 수행되면, phase 신호의 heartbeat component가 강화됨.  
   &ensp; - 위상 신호 ($\large {ϕ}$)의 1'st order temporal difference  
-  &ensp; &ensp; ㅁ [Eq. 13] - &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
+  &ensp; &ensp; ㅁ [Eq. 13] &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
   &ensp; - 위상신호의 샘플 수 ($M$) 와 일관성을 유지하기 위해, 위상 차 신호 $\phi^\prime$는 식 (14)로 근사된다. ( Fig. 3b 참조 (phase difference signal and its corresponding spectrum) )  
 
-  &ensp; &ensp; ㅁ [Eq. 14] - &emsp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
+  &ensp; &ensp; ㅁ [Eq. 14] &emsp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
   &ensp; &ensp; &ensp; :1'st order temporal difference는 heartbeat component가 강화되므로, $f_h$는 $2f_r$과 $4f_r$과 noise와 스펙트럼 내에서 비교시 명확해진다 (fig.3b 참조).  
   &ensp; &ensp; &ensp; ※ but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었지만, 호흡 고조파와 노이즈의 power보다는 낮음(fig 3 and 4).  
   &ensp; &ensp; &ensp; ※ 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
@@ -155,7 +155,7 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   
 - 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성하기 위해 WPD를 적용한다.  
   + heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(Eq. 15)를 더욱 완화할 수 있다.   
-  &emsp; ㅁ [Eq.15] - &emsp; $\large{    ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}    }$    
+  &emsp; ㅁ [Eq.15] &emsp; $\large{    ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}    }$    
   &emsp; &emsp; . $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
   &emsp; &emsp; . $q-th$ subband signal의 주파수 범위는  
   &emsp; &emsp; &emsp; $\large{    \frac{f_{slow}} {2^{g+1}} × q    }$ ⁓ $\large{    \frac{f_{slow}}{2^{g+1}} × (q+1)    } $, &emsp; $q = 0, 1, 2 ...$
@@ -197,7 +197,7 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
   &emsp; &emsp; + $ ι $는 filter length
   
 - $ψ_m=[ψ_{m1},ψ_{m2}, … , ψ_{ML}], m ∈ ${1, 2, … , M}은 적응 필터의 input 벡터($v^T(k)$)에 해당하는 $Ψ$의 row vector이다  
-- $h$의 요소 $h_m, m ∈ $ {1, 2, ..., M}은 $ψ_m$은 원하는 신호 $\rho(k)$에 해당한다  
+- $h$의 요소 $h_m, m ∈ {1, 2, ..., M}$은 $ψ_m$은 원하는 신호 $\rho(k)$에 해당한다  
 - The vector $e=[e_1, e_2, … ,e_L]^T$은 adaptive filter coefficient vector $ω(k)$에 해당한다   
   + Recursive least square (RLS)는 연속 제곱 오류 시퀀스의 가중 합으로 정의되는 cost function (최근 관심 증가)  
 
