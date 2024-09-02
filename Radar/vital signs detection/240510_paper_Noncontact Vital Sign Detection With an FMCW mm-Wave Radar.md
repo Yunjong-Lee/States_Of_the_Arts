@@ -77,55 +77,57 @@ layout: post
 
 - n번째 ADC 샘플과 m번째 처프에 대해, signal $y(n,m)$ can be expressed as  
 
-  &emsp; - [Eq. 8] &emsp; $y(n,m) = \large{
-                            \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp [ j(2\pi \frac{2Bd_i×(nT_f)}{cT_d} nT_f + 4\pi \frac{d_i (nT_f + nT_s)}{\lambda} ) ]
-                                            }$  
+  &emsp; ㅁ [Eq. 8] - &emsp; $y(n,m) = \large{
+                                              \frac{A_T A_R}{2} \displaystyle\sum _{i=1} ^{\omega} exp ( j(2\pi \frac{2 B d_i × (n T_f)} {c T_d} n T_f + 4 \pi \frac{d_i (nT_f + n T_s)}{\lambda} ) ) }$  
 
   &emsp; &emsp; + $T_f$와 $T_s$는 time interval corresponding to the fast time and slow time, respectively.  
-  &emsp; &emsp; + $d_i(t)$는  i'th range bin에 있는 object와 radar 사이의 range로   
-  &emsp; &emsp; &emsp; [Eq. 9] &emsp; $d_i (t) = \hat{d_i} + \hat{d_i}(t)$   
+  &emsp; &emsp; + $d_i (t)$는  i'th range bin에 있는 object와 radar 사이의 range로
+  
+  &emsp; &emsp; &emsp; ㅁ [Eq. 9] - &emsp; $d_i (t) = \hat{d_i} + \hat{d_i}(t)$
+  
   &emsp; &emsp; + $d_i$는 레이더와 반사체(i-번째 range bin) 사이의 거리이고, $d_i(t)$는 반사체의 시간에 따른 변위  
   
 - Eq. (8)과 (9) 기반으로, m_th chirp $f_b$의 frequency는
     
-  &emsp; - [Eq. 10] &emsp; $f_b = \LARGE{ 
-                                        \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} 
-                                        }$   
-  &emsp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency 변화가 작기때문에 무시 가능.  
-  &emsp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time 영역을 FFT (range FFT라고도 힌디)  
-  &emsp; &emsp; + [Eq. 11] &emsp; $z(i, m) = \large{
-                                              \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N})
-                                              }$  
-  &emsp; &emsp; &emsp; -->> 여기서, i는 range bin index  
-
+  &emsp; ㅁ [Eq. 10] - &emsp; $f_b = \LARGE{
+                                           \frac{2B(\hat d_i + \hat d_i(nT_f))}{cT_s} = \frac{2B \hat d_i}{cT_d} }$
+  
+  &emsp; - fast time displacement ( $d_i(nT_f)$ )는 chirp duration가 짧고, frequency 변화가 적기때문에 무시할 수 있다  
+  &emsp; - 반사체의 range bin finding은 각각의 chirp에 대해 fast time 영역을 FFT (range FFT라고 함)
+  
+  &emsp; &emsp; ㅁ [Eq. 11] - &emsp; $z(i, m) = \large{
+                                                      \displaystyle\sum _{n=0} ^{N-1} y(n,m)exp(-j2\pi \frac{in}{N}) }$
+  
+  &emsp; &emsp; &emsp; . i : range bin index
+  
   &emsp; - reflecting object의 range bin은 반사체가 없는 것의 range bin (empty bin)보다 많은 에너지를 가지므로 range FFT로 empty bin 필터링 가능.  
-  &emsp; &emsp; &emsp; -->> empty bin의 예로는 correspond to wall, desk, or metal objects 등  
+  &emsp; &emsp; . empty bin의 예 : wall, desk, or metal objects 등  
   &emsp; - 4 GHz의 BW를 가지는 FMCW radar 경우, range redolution이 3.75cm 이므로 반사체의 multirange bin 검출 가증  
-  &emsp; &emsp; &emsp; : multirange bin으로는 팔, 다리 등
+  &emsp; &emsp; . multirange bin으로는 팔, 다리 등
   
-- 결과적으로, range FFT로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
-  &emsp; -->> Q. range bin의 위상 변화를 관찰하는 방법 확인이 필요함
+- range FFT 결과로 얻어진 range bin의 위상 변화를 관찰하여 선택된 range bin에서 vital signs 신호가 존재하는지 결정한다.  
+  &emsp; ? Q. range bin의 위상 변화를 관찰하는 방법 확인이 필요함
   
-- Based on (8) and (9), the phase 는  
-  &emsp; - $\phi = \large{
-  \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda}
-  }$
+- Based on (8) and (9), the phase 는
   
-  &emsp; &emsp; 여기서, quasi-stationary human subject ( $\hat{d}_i$ )는 slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리이고,  
-  &emsp; &emsp; chest wall displacement, $\hat{d}_i (t)$ 는 호흡과 심장박동으로 생겨나는 chest의 displacement이고,  
-  &emsp; &emsp; fast time에서 흉벽 변위, $\hat{d}_i (nT_f)$ 는 짧은 chirp 주기로 인해 무시할 수 있고,
-  &emsp; &emsp; slow time에서 흉벽 변위, $\hat{d}_i (mT_f)$ 는 pulse change가 발생한다. 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
+  &emsp; ㅁ $\phi = \large{
+                          \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) ) }{\lambda} ≅ \frac{ 4 \pi (\hat{d}_i + \hat{d}_i(nT_f + mT_s) )) }{\lambda} }$  
+  
+  &emsp; &emsp; . quasi-stationary human subject ( $\hat{d}_i$ ) : slow time에서 일정하게 유지되는 반사체와 레이더 사이의 거리,  
+  &emsp; &emsp; . chest wall displacement, $\hat{d}_i (t)$ : 호흡과 심장박동으로 생겨나는 chest의 displacement,  
+  &emsp; &emsp; . fast time에서 흉벽 변위, $\hat{d}_i (nT_f)$ : 짧은 chirp 주기로 인해 무시 가능,
+  &emsp; &emsp; . slow time에서 흉벽 변위, $\hat{d}_i (mT_f)$ : pulse change가 발생한다. 그러므로, 강한 vital signs을 가지는 신체 부위에 대응하는 range bin에 대해서는 위상 변이가 크다(위상 변위가 특정 임계값 보다 높다).  
 
 - range bin이 결정된 뒤에 phase signal(respiration signal, heartbeat signal, noise 등이 포함된)은 slow time을 따라 추춮된다.  
 
-  &ensp; - $\phi = [\phi_1, &ensp; \phi_2, &ensp; ... , \phi_m]$
+  &ensp; ㅁ $\phi = [\phi_1, &ensp; \phi_2, &ensp; ... , \phi_m]$
 
 ## B. Differential Enhancement Module  
 Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.  
 ~~The waveform with large amplitude is caused by respiration and varies significantly, while the tiny vibration at the top of the waveform is caused by heartbeat, which is weak and not visible.~~
 - amplitude가 큰 waveform은 호흡에 의해 발생 (변동이 심함), 파형 상단의 작은 진동은 심장 박동에 의해 발생 (눈에 잘 띄지 않는다)  
 ~~It is apparent that the chest wall displacement is mainly modulated by respiration.~~  
-  &ensp; - 호흡으로 인한 흉벽의 변위는 heartbeat으로 인한 것 보다 클 수 있다. ~~The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat.~~ 
+  &ensp; . 호흡으로 인한 흉벽의 변위는 heartbeat으로 인한 것 보다 클 수 있다. ~~The chest wall displacement caused by respiration can be an order of magnitude higher than that caused by heartbeat.~~ 
 - chest wall displacement(caused by respiration)는 순수한 사인파가 아니고, Fig 3(a) phase spectrum처럼 위상스펙트럼에 고조파를 포함. 
 - respiration frequency $f_r$과 비교하면, heartbeat frequency의 power는 weak하고 2차 호흡 고조파 $2f_r$의 power와 쉽게 합쳐진다. 4차 호흡 고조파, $4f_r$와 noise, HR 추정이 부정확해 진다. 
 
@@ -134,39 +136,42 @@ Fig. 3(a) shows the phase signal $\large{ϕ}$ and its corresponding spectrum.
 - HR 추정시 호흡 고조파와 Noise의 영향을 완화하기 위해 VS 신호 추출 후 1'st temporal difference가 수행된다.  
   &ensp; : 1'st order temporal difference가 수행되면, phase 신호의 heartbeat component가 강화됨.  
   &ensp; - 위상 신호 ($\large {ϕ}$)의 1'st order temporal difference  
-  &ensp; &ensp; [Eq. 13] &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
+  &ensp; &ensp; ㅁ [Eq. 13] - &ensp; $\phi = [\phi_2 - \phi_1, \phi_3 - \phi_2, ... , \phi_m - \phi_{m-1} ]^T$  
   &ensp; - 위상신호의 샘플 수 ($M$) 와 일관성을 유지하기 위해, 위상 차 신호 $\phi^\prime$는 식 (14)로 근사된다. ( Fig. 3b 참조 (phase difference signal and its corresponding spectrum) )  
 
-  &ensp; &ensp; [Eq. 14] &emsp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
+  &ensp; &ensp; ㅁ [Eq. 14] - &emsp; $\phi^\prime = [0, \phi^{\prime T}]^T$  
   &ensp; &ensp; &ensp; :1'st order temporal difference는 heartbeat component가 강화되므로, $f_h$는 $2f_r$과 $4f_r$과 noise와 스펙트럼 내에서 비교시 명확해진다 (fig.3b 참조).  
   &ensp; &ensp; &ensp; ※ but, 완벽히 제거되지 않음. $f_h$의 power가 differential enhancement module 후에 강화되었지만, 호흡 고조파와 노이즈의 power보다는 낮음(fig 3 and 4).  
   &ensp; &ensp; &ensp; ※ 4치 고조파의 피크에 해당하는 주파수가 심박 주파수로 선택되어 큰 HR estimation 오류가 야기될 수 있다.  
 
 ## C. Signal Decomposition Module : WPD  
 - 호흡으로 인한 chest wall movement의 범위는 1 to 12 mm (frequency로는 0.1–0.5 Hz)이고 heartbeat로 인한 chest wall movement는 0.2 to 0.5 mm (frequency로는 0.8–2.0 Hz)이다. [^5], [^14].
+
   |          |  range       | frequency    |
   |---       | ---          | ---          |
   |호흡      | 1 - 12 mm    | 0.1 - 0.5 Hz |
   |heartbeat | 0.2 - 0.5 mm | 0.8 - 2.0 Hz |
+
   
 - 차동 강화 모듈 이후에 위상차 신호($ϕ′$)를 분해하고 호흡 신호($θ$)와 심박 신호($h$)를 재구성하기 위해 WPD를 적용한다.  
   + heartbeat와 respiration signals를 분리하면 호흡 하모닉의 간섭과 고주파 노이즈(Eq. 15)를 더욱 완화할 수 있다.   
-  &emsp; [Eq.15] &emsp; $\large{    ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}    }$    
-  &emsp; &emsp; -. $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
-  &emsp; &emsp; -. $q-th$ subband signal의 주파수 범위는  
+  &emsp; ㅁ [Eq.15] - &emsp; $\large{    ϕ ^\prime = s_{g,0} + s_{g,1} + s_{g,2} +⋯+s_{g,2^g−2} + s_{g,2^g−1}    }$    
+  &emsp; &emsp; . $s$는 $g-th$ 계층의 WPD 이후의 subband signal  
+  &emsp; &emsp; . $q-th$ subband signal의 주파수 범위는  
   &emsp; &emsp; &emsp; $\large{    \frac{f_{slow}} {2^{g+1}} × q    }$ ⁓ $\large{    \frac{f_{slow}}{2^{g+1}} × (q+1)    } $, &emsp; $q = 0, 1, 2 ...$
 
 - wavelet bias로 Morlet wavelet 선택  
   &emsp; - 선정 사유: 호흡과 심박 파형과 유사  
   &emsp; - WPD의 6번째 level에서 64 subband 신호를 얻을 수 있음  
-  &emsp; &emsp; -. $θ = s_{6,0} + s_{6,1} + s_{6,2}$   
-  &emsp; &emsp; -. $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}$      
-  &emsp; &emsp; -. 첫번째에서 세번째 서브밴드 신호는 호흡 재구성에 사용되며, 6번째부터 12번째 서브밴드 신호는 심박 신호 재구성에 사용됨.  
-  &emsp; &emsp; -. WPD 이후, $Δ$초 간격으로 $δ$초 slide(이동)   
-※ sliding time window를 가지는 호흡과 심박 신호에 따라 (signal with sliding time window), vital sign rate reconstruction module은 high-resolution sparse spectrum (정확한 RR과 HR 추정을 위해)을 얻기 위해 제안됨  
+  &emsp; &emsp; . $θ = s_{6,0} + s_{6,1} + s_{6,2}$   
+  &emsp; &emsp; . $h = s_{6,5} + s_{6,6} + s_{6,7} + s_{6,8} + s_{6,9} + s_{6,10} + s_{6,11}$  
+  &emsp; &emsp; . 첫번째에서 세번째 서브밴드 신호는 호흡 재구성에 사용되며, 6번째부터 12번째 서브밴드 신호는 심박 신호 재구성에 사용됨.  
+  &emsp; &emsp; . WPD 이후, $Δ$초 간격으로 $δ$초 slide(이동)
+  
+- sliding time window를 가지는 호흡과 심박 신호에 따라 high-resolution sparse spectrum (정확한 RR과 HR 추정을 위해)을 얻기 위해 vital sign rate reconstruction module을 제안  
 
 ## D. Vital Sign Rate Reconstruction Module
-### 1) SSR for Vital Sign Rate Reconstruction:
+### 1) SSR for Vital Sign Rate Reconstruction
 - SSR의 목적 : high-resolution sparse spectrum 획득  
   + high-resolution sparse spectrum 획득 방법: 식 20을 활용한 signal sparsity를 증가시키는 방벙 적용  
   + spectrum reconstruction은 underdetermined linear equation을 기반으로 얻어진다.  
