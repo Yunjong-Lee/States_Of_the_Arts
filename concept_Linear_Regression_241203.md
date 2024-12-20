@@ -8,12 +8,12 @@ layout: post
 ## 개요  
 - 알번적인 데이터 분석 기법으로 선형회귀 분석과 딥 러닝이 있다.
   + 선형회귀 분석  
-    : 선형 조합을 사용하여 종속 변수와 독립 변수 간의 관계를 모델링  
-    : $$ y= β_0 X_0 + β_1 X_1 + β_2 X_2 + … β_n X_n + ε \tag{1} $$  
-      -. 여기서 $β, ε$는 회귀 계수  
+    : 선형 조합을 사용하여 종속 변수와 독립 변수 간의 관계를 모델링
+    $$ y= β_0 X_0 + β_1 X_1 + β_2 X_2 + … β_n X_n + ε \tag{Eq. 1} $$  
+    └─ 여기서 $β, ε$는 회귀 계수  
 
-    | 선형 회귀      | 로지스틱 회귀 |
-    | ---           | ---          |
+    | 선형 회귀              | 로지스틱 회귀             |
+    | --------------------- | ------------------------ |
     | 주어진 일련의 독립 변수를 사용하여 </br> 연속된 종속 변수의 실제 값 예측 | 분류 알고리즘 (연속 데이터의 실제 값을 예측할 수 없음) |
     |연속 변수는 가격 또는 나이와 같은 값의 범위를 </br> 값으로 가질 수 있다 | |
     | “10년 후 쌀 가격은 어떻게 될까요?”와 같은 질문에 </br> 답 가능 | “10년 안에 쌀 가격이 50% 상승할까요?”와 같은 질문에 답 가능 |
@@ -21,9 +21,9 @@ layout: post
   + 딥러닝
     : 신경망 또는 소프트웨어 구성 요소를 사용하여 정보를 분석하는 기법
 
-    | 딥러닝  | 로지스틱 회귀 |
-    | ---    | ---           |
-    | 오류에 대한 조사나 수정이 거의 안된다 |계산이 투명하고 </br> 문제 해결이 쉽다 </br> 계산이 복잡하지 않음 |  
+    | 딥러닝                 | 로지스틱 회귀             |
+    | --------------------- | ------------------------ |
+    | 오류에 대한 조사나 수정이 거의 안된다 | 계산이 투명하고 </br> 문제 해결이 쉽다 </br> 계산이 복잡하지 않음 |  
 
 ## 정의
 - Logistic Regression은 두 데이터 요인 간의 관계를 찾는 데이터 분석 기법으로, 예측 변수에 기반한 이진 반응 변수를 모델링하는데 사용된다  
@@ -31,13 +31,13 @@ layout: post
 
   + 두 개의 값을 갖는 범주형 종속변수를 분류하고 예측하는 것으로 두 개의 클래스에 대한 확률 값이기 때문에 이항 분포[^1]를 따른다. (독립 변수 $X$가 어떤 확률 값을 갖는냐를 찾는 것임.)   
   + 확률 = $P(y=1|X) = p$  
-     : 이 확률 값을 구하기 위한 회귀식이 식 [1]이다.  
+     : 이 확률 값을 구하기 위한 회귀식이 Eq. 1 이다.  
   + 종속 변수의 범위를 $-∞ ~ ∞$까지 변환이 필요하며, 이를 위해서 활용되는 개념이 odds와 logit function 이다.  
     - odds: 성공확률/실패확률을 의미  
     - logit: 오즈에 log함수를 취하는 변환함수  
-    . $0 ≤ P(y=1|X) = p(성공확률) ≤ 1$  
-    . $0 ≤ Odds = \frac{성공확률}{실패확률} = \frac{p}{1-p} ≤ ∞$  
-    . $-∞ ≤ log(Odds) = log(\frac{p}{1-p}) ≤ ∞$    
+    . $0 ≤ P(y=1|X) = p(성공확률) ≤ 1 $  
+    . $0 ≤ Odds = \large { \frac{성공확률}{실패확률} } = \frac{p}{1-p} ≤ ∞ $  
+    . $-∞ ≤ log(Odds) = log(\frac{p}{1-p}) ≤ ∞ $    
     ※ Odds는 확률 p가 1에 가까워질수록 분모가 0에 가까워지니 무한대로 갈 것이고 여기에 log를 취하면 범위가 [-∞,∞]로 변환된다 ← 종속변수 범위 변환.  
     . $log(Odds) = log(\frac{p}{1-p}) = β_0 + β_1 x_1 + β_2 x_2 + … β_n x_n$   
     . 확률 $P(y=1|X) = p = \LARGE{
@@ -73,22 +73,54 @@ layout: post
   + $logit(p_t) = ln(\frac{p_i}{1-P_i}) = β_0 + β_1 x_i $  
     : 모델은 로그 스케일로 값을 생성하고 위의 로지스틱 방정식을 사용하여 0 ~ 1 사이의 값으로 변환  
 
-- train_set에서 최상의 매개변수 추정치는 최대 우도 프레임워크 내에서 ~~최상의 매개변수  추정치는~~ 통계적 모델이 실제로 관찰된 데이터를 생성할 가능성을 최대화  
-  + 적합을 관찰된 데이터 세트에 대한 확률 분포로 생각할 수 있음   
-    : 확률 분포의 매개변수는 관찰된 데이터가 해당 분포에서 나왔을 가능성을 최대화해야 한다.  
-    : 가우시안 분포를 사용하는 경우 관찰된 데이터가 해당 특정 가우시안 분포에서 추출될 가능성이 더 높아질 때까지 평균 및 분산 매개변수를 변경해야한다.  
-    : 로지스틱 회귀에서 응답 변수는 이항 분포 또는 특수한 베르누이 분포로 모델링된다.  
-    : 각 응답 변수의 값 $y_i$는 0 또는 1이고  
+- ~~train_set에서 최상의 매개변수 추정치는 최대 우도 프레임워크 내에서 통계적 모델이 실제로 관찰된 데이터를 생성할 가능성을 최대화~~  
+  + ~~적합을 관찰된 데이터 세트에 대한 확률 분포로 생각할 수 있음~~   
+    ~~: 확률 분포의 매개변수는 관찰된 데이터가 해당 분포에서 나왔을 가능성을 최대화해야 한다.~~  
+    ~~: 가우시안 분포를 사용하는 경우 관찰된 데이터가 해당 특정 가우시안 분포에서 추출될 가능성이 더 높아질 때까지 평균 및 분산 매개변수를 변경해야한다.~~  
+    ~~: 로지스틱 회귀에서 응답 변수는 이항 분포 또는 특수한 베르누이 분포로 모델링된다.~~  
+    ~~: 각 응답 변수의 값 $y_i$는 0 또는 1이고~~  
 
 ## [Regression Coefficient Estimation](https://m.blog.naver.com/winddori2002/221706766540)  
 - 로지스틱 회귀계수를 추정하기 위해서는 최대우도법(MLE:Maximun Likelihood Estimation)나 Gradient Descent Method 등을 활용할 수 있다  
 ### Maximun Likelihood Estimation  
-- 표본 x로부터 우리가 알고자 하는 모수(파라미터)를 추정
-  (우도(likelihood)는 확뷸분포에서 x가 발생했을 때, x가 나오게하는 파라미터의 가능성, 우도를 최대로 만들고자 하는 것)
-  즉, $X$가 변수가 아니라 상수로 고정, 파라미터를 변수로 하여 파라미터의 가능성을 우도라 할 수 있고, 다음 식으로 나타낼 수 었다.  
+- 우도[^2]를 최대로 만드는 것
+- 어떤 모수가 주어졌을 때, 원하는 값들이 나올 가능도를 최대로 만드는 모수를 선택하는 방법 
+- 표본 x로부터 우리가 알고자 하는 모수(파라미터)를 추정. 즉, $X$가 변수가 아니라 상수로 고정, 파라미터를 변수로 하여 파라미터의 가능성(=우도)을 다음 식으로 나타낼 수 었다.  
 
-  + $L(\theta) = f_x(x|\theta)$                                                        
+  + $L(\theta) = f_x(x|\theta)$  // $\theta$의 parameter를 가지는 분포  
+    - $\theta$가 parameter로 $\mu, \sigma$를 가지고 있는 ( $\theta =(\mu, \sigma)$ ) 정규분포라 할때, 한 개의 데이터가 이 정규분포를 따를 확률은  
+      . $p(x_n | \theta) = \LARGE{
+        \frac{1}{ \sqrt{2\pi \sigma} }exp{-\frac{(x_n - \mu )^2}{2 \sigma^2}}
+    } $ // data $x_n$이 $\theta =(\mu, \sigma)$의 파라미터를 가지는 정규분포를 따를 확률
+    - 모든 데이터들이 독립적(Indipendent)이라고 가정하면,  
+       $$L(\theta) = p(X|\theta) = \displaystyle \prod_{n=1}^{N}p(x_n | \theta) \tag{Eq. 2} $$  
+    - Eq. 2가 likelihood 계산식 이다. data $X$가 $\theta$의 parameter를 가지는 분포를 따르려면, 이 likelihood가 최대가 되는 분포를 찾아야 한다.  
+      ※ 최대값을 구할때 주로 미분을 사용하지만(곱셈으로 연결된 식의 구조상 미분을 적용하기 쉽지 않음) log와 -를 취해서 최소가 되는 값을 구함으로써 maximum likelihood를 결정한다.  
+       $$E(\theta) = -ln L(\theta) = -\displaystyle \sum_{n=1} ^{N}ln p(x_n|\theta) \tag{Eq. 3} $$
+    - Eq. 3이 log likelihood 계산식 임.  
 
+- Maximum Likelihood 계산  
+  : likelihood를 최대화하는 (log likelihood를 최소화하는) θ 값을 구함(likelihood 식 미분 → 이 식이 0이 되는 값(극소값)을 찾는다)  
+
+  $$\frac{\partial}{\partial \theta} E(\theta) = - \frac{\partial}{\partial \theta} \displaystyle \sum_{n=1} ^{N}ln p(x_n|\theta) = \sum_{n=1} ^{N} \frac{ \frac{\partial}{\partial \theta}p(x_n|\theta) }{ p(x_n|\theta) } \simeq 0 \tag{Eq. 4} $$
+
+  + explain
+    - 분포가 $\theta = (\mu, \sigma)$인 정규 분포라면, $p$는  
+      $$p(x_n|\mu, \sigma) = \frac{1}{\sqrt{2 \pi \sigma}} e^{- \frac{{||x_n - \mu||^2}}{2 \sigma^2} } \tag {Eq. 5} $$  
+      └─ 여기서, $\mu$는 평균, $\sigma$는 분산을 나타낸다.
+      
+    $$\frac{\partial}{\partial \mu} E(\mu, \sigma) = - \displaystyle \sum_{n=1} ^{N} \frac{ \frac{\partial}{\partial \mu}p(x_n|\mu, \sigma) }{ p(x_n|\mu, \sigma) } = - \displaystyle \sum_{n=1} ^{N} -\frac{2(x_n - \mu)}{2 \sigma^2} $$
+    $$ = \frac{1}{\sigma^2} \displaystyle \sum_{N}^{n=1}(x_n - \mu) = \frac{1}{\sigma^2} (\displaystyle \sum_{N}^{n=1} x_n -N_{\mu}) \tag{Eq. 6} $$
+      Eq. 6을 0으로 만드는 parameter $\theta = (\mu, \sigma)$를 찾아야 한다.  
+        ├─ $\sigma$는 분모이므로 이 값으로 식을 0으로 만들 수 없디.    
+        ├─ 그러므로, $\mu$를 Eq. 7과 같이 정의하여 Eq. 6을 0으로 만든다.  
+        └─ 또 $\mu$로부터 $\sigma$ (Eq. 8) 를 얻어낼 수 있음  
+    $$\hat{\mu} = \frac{1}{N} \displaystyle \sum_{n=1}^{N} x_n \tag {Eq. 7}$$
+
+    $$\hat{\sigma}^2 = \frac{1}{N} \displaystyle \sum_{n=1}^{N} (x_n -\hat{\mu})^2 \tag {Eq. 8} $$  
+
+    ∴ 결과적으로 likelihood를 최대로하는 파라미터 값(평균과 분산 값)을 MLE라고 한다.
+      → 하지만, ML은 분산을 실제보다 작게 추정하여 표본에 대하여 overfitting이 발생할 수 있다.
 
 ### Gradient Descent Method  
 
@@ -179,7 +211,15 @@ $\LARGE P(y=1 | x) \brack P(y=n | x) $ = $\LARGE exp(θ ^T _1 x) \brack ∑ _k e
 ![](https://velog.velcdn.com/images%2Fjoo4438%2Fpost%2F733d73c5-8804-41b4-aa78-0e45c0baa2b4%2Fimage.png)
 
 
-
 --- 
 
-[^1]:  연속된 n번의 독립적 시행에서 각 시행이 확률 p를 가질 때의 이산 확률 분포이다. 이러한 시행은 베르누이 시행이라고 불리기도 한다. 사실, n=1일 때 이항 분포는 베르누이 분포이다.
+[^1]: 연속된 n번의 독립적 시행에서 각 시행이 확률 p를 가질 때의 이산 확률 분포이다. 이러한 시행은 베르누이 시행이라고 불리기도 한다. 사실, n=1일 때 이항 분포는 베르누이 분포이다.
+
+[^2]: 확뷸분포에서 x가 발생했을 때, x가 나오게하는 파라미터의 가능성.
+      Likelihood란, 데이터가 특정 분포로부터 만들어졌을(generate) 확률을 말함. 예를 들어 
+      $X = (1,1,1,1,1)라는 데이터가 존재할 때, 데이터 X는 아래 두 분포 중에서 왼쪽 분포를 따를 확률이 더 높다. 그러므로, 왼쪽 분포의 데이터 X에 대한 likelihood가 더 높다고 표현할 수 있다.
+      ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJEPr4%2Fbtqz7pMPeHW%2FHkDNuGNsUZ6tb9tVCfw6M0%2Fimg.png)
+
+
+
+
