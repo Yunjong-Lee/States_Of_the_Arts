@@ -81,7 +81,8 @@ layout: post
     ~~: 각 응답 변수의 값 $y_i$는 0 또는 1이고~~  
 
 ## [Regression Coefficient Estimation](https://m.blog.naver.com/winddori2002/221706766540)  
-- 로지스틱 회귀계수를 추정하기 위해서는 최대우도법(MLE:Maximun Likelihood Estimation)나 Gradient Descent Method 등을 활용할 수 있다  
+- 로지스틱 회귀 계수를 추정하기 위해서는 최대우도법(MLE:Maximun Likelihood Estimation)나 Gradient Descent Method 등을 활용할 수 있다    
+
 ### Maximun Likelihood Estimation  
 - 우도[^2]를 최대로 만드는 것
 - 어떤 모수가 주어졌을 때, 원하는 값들이 나올 가능도를 최대로 만드는 모수를 선택하는 방법 
@@ -123,7 +124,42 @@ layout: post
       → 하지만, ML은 분산을 실제보다 작게 추정하여 표본에 대하여 overfitting이 발생할 수 있다.
 
 ### Gradient Descent Method  
+- 비용함수의 비용 값을 최소화하는 파라미터 $\theta$를 찾는 방법.  
 
+  repeat until convergence {  
+    $\theta_j := \theta_j -\alpha \frac{\partial}{\partial \theta_j} J(\theta_0, \theta_1)$  
+    (for j = 1 and j = 0)    
+  }  
+
+  +. $:=$ : 대입 연산자  
+  +. $\frac{\partial}{\partial \theta_j}J$: cost 함수 $J$의 미분 값  
+  +. $\alpha$ : learning rate  
+    &emsp; -. 갱신되는 $\theta$값의 속도를 결정
+
+![Gradient Descent Algorithm](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJLsIr%2FbtqDQtpPGZt%2Fwxt7CbUZXUZ1FZpHpbbR6K%2Fimg.png)  
+
+#### 1) Derivative Term  
+- $\theta(= w)$가 반복적으로 갱신되면서 최솟값에 도달. 
+  + $\theta$ 갱신 조건: 기울기 하강과 기울기 상승의 2가지 경우가 있음.
+    - 기울기 하강  
+      : 포물선의 대칭축을 기준으로 오른쪽 영역에서 한 지점을 초기값으로 설정한 경우, 우측 영역의 기울기(미분값)는 양수이므로, 갱신시 $\theta$는 감소하여 최소값 지점으로 이동  
+      ![기울기 하강](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcnTybb%2FbtqDPMKoFro%2FiKK454EqCOlkhjoBC3YDB1%2Fimg.png)  
+    - 기울기 상승  
+       : 포물선의 대칭축을 기준으로 왼쪽 영역에서 한 지점을 초기값으로 설정한 경우, 좌측 영역의 기울기(미분값)은 음수이므로, 갱신시 $\theta$는 증가하여 최소값 지점으로 이동  
+      ![기울기 상승](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbupXVw%2FbtqDQUHupTQ%2FJlLvPbOR2OYkPxUthK2qJ0%2Fimg.png)  
+
+#### 2) Learning Rate(학습 속도)  
+- learning rate의 의미
+  + learning rate가 작을 경우
+    : 최소값 도달을 위해 많은 연산 필요
+  + learning rate가 클 경우
+    : 
+  + 만약 Learning Rate없이 미분값으로만 갱신을 진행하게 되면 최솟값으로 도달하지 않고, 제자리에서 진동(learninf rate를 곱하여 갱신값에 변화를 주며 최소값에 도달)
+
+  ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDtIZs%2FbtqDPMQ9vGX%2FRdyVDU4jg4MZttZtQFPzik%2Fimg.png)  
+
+#### 3) θ의 수렴 조건
+: 
 
 
 ## Review of logistic regression
