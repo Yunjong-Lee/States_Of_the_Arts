@@ -6,30 +6,31 @@ layout: post
 # [Paper: Vital Sign Detection Using Millimeter Wave Radars](https://trace.tennessee.edu/cgi/viewcontent.cgi?article=7143&context=utk_gradthes)
 - vital sign detection with Radar 동향 논문, University of Tennessee, 5-2020
 
-## Introduction
+## Introduction  
+
 - Vital signs State of Art
 
-|    | Type | Frequency  |Dist  | BR Err| HR Err| Method     |Duration|
-|--- |---   |---         |---   |---    |---    |---         |---     |
-| 16 | UWB  | 1.5{4.5GHz | 0.8m | x     | 1.7%  | SSM-AD/CSD | 18s    |
-| 15 | SFCW | 2-4GHz     | 1m   | x     | 1.6%  | SSM        | 18s    |
-| 16 | CW   | 5.8GHz     | x    | x     | 3.4%  | TVW-CSD    | 2-5s   |
-| 13 | CW   | 14GHz      | 5m   | x     | 2.2%  | AD         | 20-30s |
-| 16 | UWB  | 24GHz      | x    | x     | *1%   | FBTS       | 20-55s |  
+|    | Type | Freq (GHz) |Dist  | BR Err| HR Err| Method  |Duration|
+|--- |---   |---         |---   |---    |---    |---      |---     |
+| 16 | UWB  | 1.5{4.5)| 0.8m | x     | 1.7%  | SSM-AD/CSD | 18s    |
+| 15 | SFCW | 2-4     | 1m   | x     | 1.6%  | SSM        | 18s    |
+| 16 | CW   | 5.8     | x    | x     | 3.4%  | TVW-CSD    | 2-5s   |
+| 13 | CW   | 14      | 5m   | x     | 2.2%  | AD         | 20-30s |
+| 16 | UWB  | 24      | x    | x     | *1%   | FBTS       | 20-55s |  
 
 
 - Vital Signs Mmwave Results  
 
-|    | Type | Frequency  |Dist  | BR Err| HR Err| Method     |Duration|
-|--- |---   |---         |---   |---    |---    |---         |---     |
-| 15 | FMCW | 75-85GHz   | 1m   | 6.89% | 8.09% | FFT        | 100s   |
-| 19 | FMCW | 77-81GHz   | 1.7m | 6%    | 20%   | AD-FFT     | 40min  |
-| 16 | CW   | 60GHz      | 1m   | 2%    | 3.3%  | FFT        | 10min  |
-| 19 | UWB  | 60.5GHz    | x    | x     | x     | MRC        | 150s   |
-| 12 | CW   | 60GHz      | x    | x     | x     | FFT        | 20s    |  
+|    | Type | Freq (GHz) |Dist  | BR Err| HR Err| Method  |Duration|
+|--- |---   |---         |---   |---    |---    |---      |---     |
+| 15 | FMCW | 75-85   | 1m   | 6.89% | 8.09% | FFT        | 100s   |
+| 19 | FMCW | 77-81   | 1.7m | 6%    | 20%   | AD-FFT     | 40min  |
+| 16 | CW   | 60      | 1m   | 2%    | 3.3%  | FFT        | 10min  |
+| 19 | UWB  | 60.5    | x    | x     | x     | MRC        | 150s   |
+| 12 | CW   | 60      | x    | x     | x     | FFT        | 20s    |  
 
 
-- 본 논문의 주요 주제
+- 주제
   + performance 관점에서,
     - 빠르고 정확한 추정 (long term use may not be practical, FCC Part 15.255)  
     &ensp; : AD (Arc-tangent Detection) with FFT, DC Compensation (Linear Least Square Estimator, LLSE), [^Ref_5]  
@@ -37,27 +38,28 @@ layout: post
     ※ 추정 및 개선관련하여, feature extraction methods에서 가능성을 보임
    
   + frequency bands 관련 EIRP[^EIRP] 규정 (for Tx, as of 2013 in FCC 78 FR 59844 (09/30/2013))  
-    - 57~65GHz에서,   
-    &ensp; . average power  : ~ 40dBm   
-    &ensp; . peak power : ~ 43dBm   
-    - 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용, part 95)  
-    &ensp; +. average power : ~ 50dBm  
-    &ensp; +. peak power : ~ 56dBm  
+    - 57~65GHz에서,  
+      * average power  : ~ 40dBm  
+      * peak power : ~ 43dBm  
+    - 77GHz에서  (vehicular radar의 경우, 76 ~ 81GHz band에서 적용, part 95)
+      * average power : ~ 50dBm  
+      * peak power : ~ 56dBm
+          
   + PoC
     - holding breath [^holding_breath]
-    -  estimates on short time scales [^short_time_scale_1] [^short_time_scale_2]
+    - estimates on short time scales [^short_time_scale_1] [^short_time_scale_2]
 
   + SSM[^SSM]  
-    &ensp; . 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
-    &ensp; . UWB, SFCW 방식에 적용  
-    &ensp; . AD과 complex signal demodulation (CSD) 후에 적용  
+    - 측정된 심박수의 SNR 향상, 현재 MIMO에서도 SNR 개선   
+    - UWB, SFCW 방식에 적용  
+    - AD과 complex signal demodulation (CSD) 후에 적용  
 
 ## ---  
 - 범위 정보는 샘플링 주파수($f_s$) 및 처프 스위프 기울기에 의존
 - range resolution은 sweap bandwidth($B_w$)에 의존
-- The number of chirps per second:  
-&ensp; +. duty cycle 증가  
-&ensp; +. 자세한 object의 range & azimuth 제공  
+- The number of chirps per second:
+  + duty cycle 증가
+  + 자세한 object의 range & azimuth 제공  
 - sampling point는 sampling frequency bin과 같음  
 - sampling rates가 높을수록 sample points per chirp 제공 ... 더 많은 range bins 처리  
 
