@@ -63,8 +63,12 @@ layout: post
 - sampling point는 sampling frequency bin과 같음  
 - sampling rates가 높을수록 sample points per chirp 제공 ... 더 많은 range bins 처리  
 
+---
 
-## 4. Vital Sign Signal Processing
+## 4. Vital Sign Signal Processing  
+
+range profile은 하나의 chirp의 FFT 결과로 얻어진다. 하나의 column이고 각각의 row(행)는 대상 거리에 해당하는 beat freq.
+
 ### 4.1. Phase based Methods
 - CSD (Complex Signal Demodulation) & AD (Arctangent Demodulation)
 - CSD : slow-time 축에서 target의 range profile 추출 → 추출된 range bin에 대해 FFT → HR/BR signal 추출  
