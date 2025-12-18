@@ -30,12 +30,10 @@ layout: post
 ※ 2개 클래스 또는 이진 반응 문제를 위해 고안되었지만, 다중 클래스 문제로 일반화 가능  
 
   + 두 개의 값을 갖는 범주형 종속변수를 분류하고 예측하는 것으로 두 개의 클래스에 대한 확률 값이기 때문에 이항 분포[^1]를 따른다. (독립 변수 $X$가 어떤 확률 값을 갖는냐를 찾는 것임.)   
-  + 확률 = $P(y=1|X) = p$  
+  + $P(y=1|X) = p$  
      : 이 확률 값을 구하기 위한 회귀식이 Eq. 1 이다.  
-  + 종속 변수의 범위를 $-∞ ~ ∞$까지 변환이 필요하며, 이를 위해서 활용되는 개념이 odds와 logit function 이다.  
-    - odds: 성공확률/실패확률을 의미  
-    - logit: 오즈에 log함수를 취하는 변환함수  </br>  
-    . $0 ≤ P(y=1|X) = p(성공확률) ≤ 1 $  </br>  
+  + 종속 변수의 범위를 $-∞ ~ ∞$까지 변환이 필요하며, 이를 위해서 활용되는 개념이 odds(성공확률/실패확률을 의미)와 logit function(오즈에 log함수를 취하는 변환함수) 이다.  
+    - $0 ≤ P(y=1|X) = p_{succ} () ≤ 1$    
     . $0 ≤ Odds = \large { \frac{성공확률}{실패확률} } = \frac{p}{1-p} ≤ ∞ $  </br>  
     . $-∞ ≤ log(Odds) = log(\frac{p}{1-p}) ≤ ∞ $  </br>  
 
@@ -257,6 +255,7 @@ $\LARGE P(y=1 | x) \brack P(y=n | x) $ = $\LARGE exp(θ ^T _1 x) \brack ∑ _k e
       Likelihood란, 데이터가 특정 분포로부터 만들어졌을(generate) 확률을 말함. 예를 들어 
       $X = (1,1,1,1,1)라는 데이터가 존재할 때, 데이터 X는 아래 두 분포 중에서 왼쪽 분포를 따를 확률이 더 높다. 그러므로, 왼쪽 분포의 데이터 X에 대한 likelihood가 더 높다고 표현할 수 있다.
       ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJEPr4%2Fbtqz7pMPeHW%2FHkDNuGNsUZ6tb9tVCfw6M0%2Fimg.png)
+
 
 
 
