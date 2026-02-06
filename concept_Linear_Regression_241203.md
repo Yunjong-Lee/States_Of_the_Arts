@@ -92,7 +92,8 @@ layout: post
     - $\theta$가 parameter로 $\mu, \sigma$를 가지고 있는 ( $\theta =(\mu, \sigma)$ ) 정규분포라 할때, 한 개의 데이터가 이 정규분포를 따를 확률은  
       . $p(x_n | \theta) = \LARGE{
         \frac{1}{ \sqrt{2\pi \sigma} }exp{-\frac{(x_n - \mu )^2}{2 \sigma^2}}
-    } $ // data $x_n$이 $\theta =(\mu, \sigma)$의 파라미터를 가지는 정규분포를 따를 확률
+    } $
+// data $x_n$이 $\theta =(\mu, \sigma)$의 파라미터를 가지는 정규분포를 따를 확률
     - 모든 데이터들이 독립적(Indipendent)이라고 가정하면,  
        $$L(\theta) = p(X|\theta) = \displaystyle \prod_{n=1}^{N}p(x_n | \theta) \tag{Eq. 2} $$  
     - Eq. 2가 likelihood 계산식 이다. data $X$가 $\theta$의 parameter를 가지는 분포를 따르려면, 이 likelihood가 최대가 되는 분포를 찾아야 한다.  
@@ -255,6 +256,7 @@ $\LARGE P(y=1 | x) \brack P(y=n | x) $ = $\LARGE exp(θ ^T _1 x) \brack ∑ _k e
       Likelihood란, 데이터가 특정 분포로부터 만들어졌을(generate) 확률을 말함. 예를 들어 
       $X = (1,1,1,1,1)라는 데이터가 존재할 때, 데이터 X는 아래 두 분포 중에서 왼쪽 분포를 따를 확률이 더 높다. 그러므로, 왼쪽 분포의 데이터 X에 대한 likelihood가 더 높다고 표현할 수 있다.
       ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJEPr4%2Fbtqz7pMPeHW%2FHkDNuGNsUZ6tb9tVCfw6M0%2Fimg.png)
+
 
 
 
