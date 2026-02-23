@@ -3,10 +3,10 @@ date: 2026-02-10 11:09:58
 layout: post
 ---
 
-# Radar SW 개발 및 점검
-- ...
+# Radar SW 개발 및 점검  
+- 단계별 점검 → Simulation 기반 점검 → 신뢰성 Test 순으로 진행한다  
 
-## 단걔별 점검 (V-모델 기반)
+## 단걔별 점검 (V-모델 기반)  
 - 요구사항 분석 및 설계
 - Algorithm Simulation 및 검증
   + parameter 정의 : Carrier Frequency, BW, pulse repeatation frequency, pulse width, ...
@@ -35,6 +35,10 @@ layout: post
 ## 신뢰성 Test를 통한 성능 점검
 - 동적 test
   + 탐지확률, 오경보율 (몬테카를로 simulation)
+
+
+# Simulator
+- [RadarSimPy](https://github.com/radarsimx/radarsimpy) : FMCW 파형 모델링, DOA estimation 기능 지원
 
 
 
